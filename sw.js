@@ -1,6 +1,6 @@
 // Offline service worker.
 // EDIT ON EVERY DEPLOY: bump CACHE, or the browser keeps serving the old shell.
-const CACHE = 'dark-nights-v7';
+const CACHE = 'dark-nights-v8';
 
 const ASSETS = ['./', './index.html', './styles.css', './data.js', './qrcode.js', './manifest.json'];
 const FONTS = [];
