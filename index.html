@@ -18,9 +18,9 @@
 /* Dark Multiverse palette, inlined so legibility never depends on a
    separately-uploaded styles.css landing. Loads after the stylesheet. */
 :root{color-scheme:dark;
- --bg:#0B0A0F;--surface:#16131C;--tint:#1E1926;
- --ink:#F2E9E4;--ink-soft:#A295A6;
- --accent:#C8102E;--action:#D4A21A;--rule:#2C2536}
+ --bg:#0D1117;--surface:#161B22;--tint:#1C222B;
+ --ink:#E6EDF3;--ink-soft:#8B98A5;
+ --accent:#3E7DC4;--action:#58A6FF;--rule:#232B36}
 :root[data-bg="0"]{--surface:#16131C;--tint:#1E1926}
 :root[data-bg="1"]{--surface:#1B1520;--tint:#241C2B}
 :root[data-bg="2"]{--surface:#14171B;--tint:#1D2128}
@@ -53,7 +53,7 @@
 <header class="phead" id="phead" hidden>
   <h1 class="ptitle">The Pull List</h1>
   <p class="psub">Offline Edition &mdash; progress saves in this browser only, no account needed</p>
-  <p class="pmeta"><span id="strapline"></span> &middot; <b id="buildtag">build v6</b></p>
+  <p class="pmeta"><span id="strapline"></span> &middot; <b id="buildtag">build v7</b></p>
   <div class="pbar2"><i id="pfill2" style="width:0%"></i></div>
   <div class="pstats"><span id="pread">0 / 0 read</span><span id="premain">&mdash;</span></div>
 </header>
@@ -189,7 +189,7 @@
   var ALLSTRANDS = (1 << D.strands.length) - 1;
   var state = {
     progress: {},
-    settings: { theme: 'default', eraScheme: 'split', cloneOrder: 'epic', viewOrder: 'reading', layout: 'tabs', lv: 2, tab: 'app', collapsed: [], pcollapsed: [] },
+    settings: { theme: 'default', eraScheme: 'split', cloneOrder: 'epic', viewOrder: 'reading', layout: 'forge', lv: 2, tab: 'app', collapsed: [], pcollapsed: [] },
     filters: { depth: 'everything', types: D.types.slice(), strands: ALLSTRANDS, sv: D.strands.length, mo: ['M','O'], annuals: true,
                unreadOnly: false, alt: true, q: '' }
   };
@@ -1070,7 +1070,7 @@
 
   function buildSettingsUI() {
     seg(document.getElementById('segLayout'),
-      [['tabs', 'tabbed'], ['pull', 'classic'], ['forge', 'dark nights']],
+      [['forge', 'dark nights'], ['tabs', 'tabbed'], ['pull', 'classic']],
       function () { return state.settings.layout; },
       function (v) {
         state.settings.layout = v;
