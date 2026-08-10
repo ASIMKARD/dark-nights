@@ -388,7 +388,7 @@ img,svg,pre,table{max-width:100%}
    gold/crimson/purple. Everything is scoped to [data-skin="pull"],
    so the compact and tabbed layouts are untouched.
    ================================================================ */
-:root[data-skin="pull"]{
+html:root[data-skin="pull"]{
   --surface:#EDE7DB; --tint:#E6DFD0; --ink:#191712; --ink-soft:#6B6459;
   --rule:#CFC6B4; --action:#1E4C8A; --accent:#B3202E; --radius:8px;
   --p0:#C0392B; --p1:#96302B; --p2:#2E2A36; --p3:#7A2E5C;
@@ -587,7 +587,7 @@ img,svg,pre,table{max-width:100%}
 :root[data-bg="6"]{--surface:#16161F;--tint:#1D1D28}
 
 /* === classic skin: original Pull List era ramp (light) === */
-:root[data-skin="pull"]{
+html:root[data-skin="pull"]{
   --surface:#EDE7DB; --tint:#E6DFD0; --ink:#191712; --ink-soft:#6B6459;
   --rule:#CFC6B4; --action:#1E4C8A; --accent:#B3202E; --radius:8px;
   --p0:#C0392B; --p1:#96302B; --p2:#2E2A36; --p3:#7A2E5C;
@@ -606,7 +606,7 @@ img,svg,pre,table{max-width:100%}
    hotter as the saga escalates. Everything is scoped to
    [data-skin="forge"] so the other two are untouched.
    ================================================================ */
-:root[data-skin="forge"]{
+html:root[data-skin="forge"]{
   --surface:#0E0B12; --tint:#15111C; --ink:#F4EDE8; --ink-soft:#9C8FA6;
   --rule:#2A2135; --action:#E8B023; --accent:#D01230; --radius:0px;
   --heat0:#D01230; --heat1:#B31C3A; --heat2:#8A2140; --heat3:#5C2342;
@@ -616,67 +616,96 @@ img,svg,pre,table{max-width:100%}
   linear-gradient(180deg,#0B0810 0%,#100C16 40%,#0B0810 100%) fixed,var(--surface);
   color:var(--ink)}
 
-/* header: struck-metal plate */
-:root[data-skin="forge"] .phead{background:linear-gradient(180deg,#161020,#0E0B12);
-  border-bottom:2px solid var(--action);padding:14px 16px 10px}
-:root[data-skin="forge"] .pname{font-family:'Anton',Impact,sans-serif;font-weight:400;
-  font-size:30px;line-height:.92;letter-spacing:.02em;text-transform:uppercase;
-  color:var(--ink);text-shadow:0 0 18px rgba(208,18,48,.45)}
-:root[data-skin="forge"] .pmeta{font-family:var(--mark);font-size:11px;
-  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
-:root[data-skin="forge"] .pbar{height:3px;border-radius:0;background:#241B30}
-:root[data-skin="forge"] .pbar i{background:linear-gradient(90deg,var(--accent),var(--action))}
+/* ----------------------------------------------------------------
+   FORGE LAYOUT — "the descent"
+   Structurally unlike both other skins. Tabbed is a stack of cards;
+   classic is paper with notched banners. This is a single continuous
+   vertical rail running the whole checklist, with every issue hung
+   off it as a node. Eras are numbered gates cut across the rail,
+   arcs are plates cantilevered off it, and rows have no card at all.
+   ---------------------------------------------------------------- */
 
-/* tabs: hard-edged, gold underline on the live one */
-:root[data-skin="forge"] .tabs{background:#0B0810;border-bottom:1px solid var(--rule)}
-:root[data-skin="forge"] .tab{font-family:var(--mark);font-size:11.5px;letter-spacing:.16em;
+/* header: struck-metal plate */
+html:root[data-skin="forge"] .phead{background:linear-gradient(180deg,#161020,#0E0B12);
+  border-bottom:2px solid var(--action);padding:14px 16px 10px}
+html:root[data-skin="forge"] .pname{font-family:'Anton',Impact,sans-serif;font-weight:400;
+  font-size:30px;line-height:.92;letter-spacing:.02em;text-transform:uppercase;
+  text-shadow:0 0 18px rgba(208,18,48,.45)}
+html:root[data-skin="forge"] .pmeta{font-family:var(--mark);font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+html:root[data-skin="forge"] .pbar{height:3px;border-radius:0;background:#241B30}
+html:root[data-skin="forge"] .pbar i{background:linear-gradient(90deg,var(--accent),var(--action))}
+html:root[data-skin="forge"] .tabs{background:#0B0810;border-bottom:1px solid var(--rule)}
+html:root[data-skin="forge"] .tab{font-family:var(--mark);font-size:11.5px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--ink-soft);border-bottom:2px solid transparent}
-:root[data-skin="forge"] .tab[aria-selected="true"]{color:var(--action);
+html:root[data-skin="forge"] .tab[aria-selected="true"]{color:var(--action);
   border-bottom-color:var(--action);background:rgba(232,176,35,.06)}
 
-/* era header: a forged bar with a notch cut out of the trailing edge */
-:root[data-skin="forge"] .era-head{background:linear-gradient(90deg,var(--acc),#100C16 88%);
-  border:0;border-left:6px solid var(--action);padding:11px 26px 11px 14px;
-  clip-path:polygon(0 0,100% 0,calc(100% - 18px) 100%,0 100%)}
-:root[data-skin="forge"] .era-head h2{font-family:'Anton',Impact,sans-serif;font-weight:400;
-  font-size:15px;letter-spacing:.13em;text-transform:uppercase;color:#FFF}
-:root[data-skin="forge"] .era-head .n{color:rgba(255,255,255,.72)}
-:root[data-skin="forge"] .era-intro{background:#100C16;border-left:6px solid var(--rule);
-  color:var(--ink-soft);font-style:normal;padding:12px 16px}
+/* --- the gate: era headers are numbered and cut across the full width --- */
+html:root[data-skin="forge"] .era{counter-increment:forge-era;position:relative;
+  background:transparent;border:0;margin:0}
+html:root[data-skin="forge"] .era-head{position:sticky;background:#0B0810;
+  border:0;border-top:2px solid var(--acc);padding:18px 16px 14px 58px;
+  display:flex;align-items:baseline;gap:10px}
+html:root[data-skin="forge"] .era-head::before{content:counter(forge-era,decimal-leading-zero);
+  position:absolute;left:12px;top:12px;font-family:'Anton',Impact,sans-serif;
+  font-size:30px;line-height:1;color:var(--acc);opacity:.85}
+html:root[data-skin="forge"] .era-head h2{font-family:'Anton',Impact,sans-serif;font-weight:400;
+  font-size:17px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+html:root[data-skin="forge"] .era-head .n{color:var(--ink-soft);font-size:11px;letter-spacing:.1em}
+html:root[data-skin="forge"] .era-intro{background:transparent;border:0;
+  color:var(--ink-soft);padding:4px 16px 14px 58px;font-style:normal;max-width:62ch}
 
-/* arc header: gold hairline above, small-caps label */
-:root[data-skin="forge"] .arc-head{background:#13101B;border-left:0;
-  border-top:1px solid var(--forge-edge);padding:12px 14px 6px}
-:root[data-skin="forge"] .arc-head h3{font-family:'Anton',Impact,sans-serif;font-weight:400;
+/* --- the rail: one continuous line down the whole era body --- */
+html:root[data-skin="forge"] .era-body{position:relative;padding-left:34px}
+html:root[data-skin="forge"] .era-body::before{content:'';position:absolute;
+  left:16px;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--acc),rgba(232,176,35,.18))}
+
+/* --- arcs: plates cantilevered off the rail, with a connector tick --- */
+html:root[data-skin="forge"] .arc{position:relative;background:transparent;
+  margin:0 0 4px;padding:14px 0 6px}
+html:root[data-skin="forge"] .arc-head{position:relative;background:#13101B;
+  border:0;border-left:3px solid var(--action);padding:10px 14px}
+html:root[data-skin="forge"] .arc-head::before{content:'';position:absolute;
+  left:-21px;top:50%;width:18px;height:2px;background:var(--action)}
+html:root[data-skin="forge"] .arc-head h3{font-family:'Anton',Impact,sans-serif;font-weight:400;
   font-size:16px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink)}
-:root[data-skin="forge"] .arc-meta{font-size:10.5px;letter-spacing:.1em;
+html:root[data-skin="forge"] .arc-meta{font-size:10.5px;letter-spacing:.1em;
   text-transform:uppercase;color:var(--ink-soft)}
-:root[data-skin="forge"] .blurb{background:transparent;color:var(--ink-soft);
-  border-left:2px solid var(--accent);padding-left:12px;margin:8px 14px 4px}
+html:root[data-skin="forge"] .blurb{background:transparent;border:0;color:var(--ink-soft);
+  padding:8px 14px 2px;margin:0;max-width:60ch}
 
-/* rows: flat slabs, hairline separated, gold edge when unread */
-:root[data-skin="forge"] .row{background:#100C16;border-top:1px solid #1D1726;
-  border-left:3px solid transparent;padding:var(--dens) 14px}
-:root[data-skin="forge"] .row:hover{background:#161020}
-:root[data-skin="forge"] .row[data-s="unread"]{border-left-color:var(--forge-edge)}
-:root[data-skin="forge"] .row[data-s="read"]{border-left-color:var(--accent);background:#0C0912}
-:root[data-skin="forge"] .row[data-s="reading"]{border-left-color:var(--action)}
-:root[data-skin="forge"] .title{letter-spacing:.01em}
+/* --- rows: no card. a node on the rail and a hairline. --- */
+html:root[data-skin="forge"] .row{position:relative;background:transparent;
+  border:0;border-bottom:1px solid #1B1526;padding:var(--dens) 6px var(--dens) 10px}
+html:root[data-skin="forge"] .row::before{content:'';position:absolute;
+  left:-24px;top:calc(50% - 4px);width:8px;height:8px;background:#0B0810;
+  border:2px solid var(--forge-edge);transform:rotate(45deg)}
+html:root[data-skin="forge"] .row[data-s="read"]::before{background:var(--accent);
+  border-color:var(--accent)}
+html:root[data-skin="forge"] .row[data-s="reading"]::before{background:var(--action);
+  border-color:var(--action)}
+html:root[data-skin="forge"] .row:hover{background:rgba(232,176,35,.045)}
+html:root[data-skin="forge"] .row[data-s="read"] .title{opacity:.45}
 
-/* badges + buttons: sharp corners, struck edges */
-:root[data-skin="forge"] .b{border-radius:0;font-family:var(--mark);font-size:10.5px;
+/* --- controls: sharp, mono, uppercase --- */
+html:root[data-skin="forge"] .b{border-radius:0;font-family:var(--mark);font-size:10.5px;
   letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--rule)}
-:root[data-skin="forge"] .b.core{background:var(--accent);border-color:var(--accent);color:#FFF}
-:root[data-skin="forge"] .chip{border-radius:0;font-family:var(--mark);font-size:11.5px;
+html:root[data-skin="forge"] .b.core{background:var(--accent);border-color:var(--accent);color:#FFF}
+html:root[data-skin="forge"] .chip{border-radius:0;font-family:var(--mark);font-size:11.5px;
   letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--rule)}
-:root[data-skin="forge"] .chip[aria-pressed="true"]{background:var(--action);
+html:root[data-skin="forge"] .chip[aria-pressed="true"]{background:var(--action);
   border-color:var(--action);color:#0B0810}
-:root[data-skin="forge"] .seg{border-radius:0;border:1px solid var(--rule)}
-:root[data-skin="forge"] .seg button[aria-pressed="true"]{background:var(--action);color:#0B0810}
-:root[data-skin="forge"] .rbtn{border-radius:0;border:1px solid var(--forge-edge);
+html:root[data-skin="forge"] .seg{border-radius:0;border:1px solid var(--rule)}
+html:root[data-skin="forge"] .seg button[aria-pressed="true"]{background:var(--action);color:#0B0810}
+html:root[data-skin="forge"] .rbtn{border-radius:0;border:1px solid var(--forge-edge);
   font-family:var(--mark);letter-spacing:.08em;text-transform:uppercase}
-:root[data-skin="forge"] .flabel{font-family:var(--mark);font-size:10.5px;
+html:root[data-skin="forge"] .flabel{font-family:var(--mark);font-size:10.5px;
   letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+html:root[data-skin="forge"] body{background:
+  linear-gradient(180deg,#0B0810 0%,#100C16 40%,#0B0810 100%) fixed,var(--surface);
+  color:var(--ink)}
 
 /* heat ramp: the eras run hotter toward Death Metal */
 :root[data-skin="forge"] .era[data-e="0"]{--acc:var(--heat3)}
@@ -684,3 +713,9 @@ img,svg,pre,table{max-width:100%}
 :root[data-skin="forge"] .era[data-e="2"]{--acc:var(--heat1)}
 :root[data-skin="forge"] .era[data-e="3"]{--acc:var(--heat0)}
 :root[data-skin="forge"] .era{--tint:#100C16;--deep:var(--ink)}
+
+/* classic must also win the body background against the later inline block */
+html:root[data-skin="pull"] body{background:var(--surface);color:var(--ink)}
+html:root[data-skin="pull"] .row,
+html:root[data-skin="pull"] .arc-head,
+html:root[data-skin="pull"] .era-intro{background:#F3EEE4}
