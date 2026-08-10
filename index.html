@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="default" data-erascheme="split">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading Order</title>
+<meta name="description" content="A complete comics reading-order tracker.">
+<meta name="theme-color" content="#1959A7">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Reading Order">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <span class="wordmark" id="wordmark"></span>
+  <span class="count" id="count">—</span>
+  <span class="pbar" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="pbar"><i id="pfill" style="width:0%"></i></span>
+  <span class="count" id="pct">0%</span>
+  <button class="iconbtn" id="jumpBtn" title="Jump to next unread" aria-label="Jump to next unread">⤓</button>
+  <button class="iconbtn" id="filterBtn" title="Filters" aria-label="Show filters" aria-expanded="false" aria-controls="filters">⚟</button>
+  <button class="iconbtn" id="setBtn" title="Settings" aria-label="Show settings" aria-expanded="false" aria-controls="panel">⚙</button>
+  <button class="iconbtn" id="themeBtn" title="Switch theme" aria-label="Switch theme">◑</button>
+</header>
+
+<header class="phead" id="phead" hidden>
+  <h1 class="ptitle">The Pull List</h1>
+  <p class="psub">Offline Edition &mdash; progress saves in this browser only, no account needed</p>
+  <p class="pmeta"><span id="strapline"></span> &middot; <b id="buildtag">build v1</b></p>
+  <div class="pbar2"><i id="pfill2" style="width:0%"></i></div>
+  <div class="pstats"><span id="pread">0 / 0 read</span><span id="premain">&mdash;</span></div>
+</header>
+
+<nav class="tabs" id="tabs" role="tablist" aria-label="Sections" hidden>
+  <button class="tab" id="tabChecklist" type="button" role="tab" aria-selected="true"  data-pane="app">Checklist</button>
+  <button class="tab" id="tabReading"   type="button" role="tab" aria-selected="false" data-pane="paneReading">Reading</button>
+  <button class="tab" id="tabReviews"   type="button" role="tab" aria-selected="false" data-pane="paneReviews">Reviews</button>
+  <button class="tab" id="tabSettings"  type="button" role="tab" aria-selected="false" data-pane="panel">Settings</button>
+</nav>
+
+
+<section class="filters" id="filters" hidden aria-label="Filters">
+  <div class="frow">
+    <span class="flabel" id="l-depth">Depth</span>
+    <span role="group" aria-labelledby="l-depth" id="depthChips"></span>
+    <span class="tally" id="tally">—</span>
+  </div>
+  <div class="frow">
+    <span class="flabel" id="l-type">Type</span>
+    <span role="group" aria-labelledby="l-type" id="typeChips"></span>
+  </div>
+  <div class="frow">
+    <span class="flabel" id="l-mo">Priority</span>
+    <span role="group" aria-labelledby="l-mo" id="moChips"></span>
+    <span class="flabel" id="l-fmt" style="width:auto">Format</span>
+    <span role="group" aria-labelledby="l-fmt" id="fmtChips"></span>
+  </div>
+  <div class="frow" id="strandRow">
+    <span class="flabel" id="l-strand">Characters</span>
+    <span role="group" aria-labelledby="l-strand" id="strandChips"></span>
+    <button class="linkbtn" id="strandAll" type="button">all</button>
+    <button class="linkbtn" id="strandNone" type="button">none</button>
+  </div>
+  <div class="frow">
+    <span class="flabel" id="l-view">View</span>
+    <input class="search" id="search" type="search" placeholder="Search issues, arcs, notes…" aria-label="Search">
+    <button class="chip" id="unreadChip" type="button" aria-pressed="false">Unread only</button>
+    <button class="chip" id="cloneChip" type="button" aria-pressed="false" title="Alternate reading order">Order</button>
+    <button class="chip" id="orderChip" type="button" aria-pressed="false" title="Reading order vs Arc Master timeline order">Order: Reading</button>
+    <button class="chip" id="altChip" type="button" aria-pressed="true">ALT tracks</button>
+    <button class="linkbtn" id="resetBtn" type="button">reset</button>
+  </div>
+</section>
+
+<section class="panel pane" id="panel" hidden role="tabpanel" aria-label="Settings">
+  <h3 class="shead">Display</h3>
+  <div class="frow"><span class="flabel">Layout</span><span class="seg" id="segLayout"></span></div>
+  <div class="frow"><span class="flabel">Density</span><span class="seg" id="segDensity"></span>
+    <span class="flabel" style="width:auto">Text</span><span class="seg" id="segFont"></span></div>
+  <div class="frow"><span class="flabel">Paper</span><span class="swatches" id="bgRow"></span></div>
+  <div class="frow"><span class="flabel">Marks</span><span class="seg" id="segMark"></span>
+    <span class="flabel" style="width:auto">Era hues</span><span class="seg" id="segEraScheme"></span></div>
+  <div class="frow"><span class="flabel">View</span>
+    <button class="chip" id="tableChip" type="button" aria-pressed="false">Table view</button>
+    <button class="chip" id="badgeChip" type="button" aria-pressed="true">Badges</button>
+    <button class="chip" id="dysChip" type="button" aria-pressed="false">Dyslexia font</button>
+    <button class="chip" id="tapChip" type="button" aria-pressed="false">Large tap targets</button>
+    <button class="chip" id="miniChip" type="button" aria-pressed="true">Mini progress bar</button>
+    <button class="chip" id="comboChip" type="button" aria-pressed="false">Combo badge</button>
+    <button class="chip" id="revChip" type="button" aria-pressed="false">Newest era first</button></div>
+
+  <h3 class="shead">Reading behaviour</h3>
+  <div class="frow"><span class="flabel">Rows</span>
+    <button class="chip" id="skipChip" type="button" aria-pressed="false">Hide skipped</button>
+    <button class="chip" id="notesChip" type="button" aria-pressed="false">Notes only</button>
+    <button class="chip" id="revealChip" type="button" aria-pressed="false">Tap to reveal notes</button>
+    <button class="chip" id="autoChip" type="button" aria-pressed="false">Jump to first unread</button></div>
+  <div class="frow"><span class="flabel">Pace</span><span class="seg" id="segPace"></span>
+    <span class="pace" id="paceOut">—</span></div>
+
+  <h3 class="shead">Touch controls</h3>
+  <div class="frow"><span class="flabel">Gestures</span>
+    <button class="chip" id="swipeChip" type="button" aria-pressed="false">Swipe to mark</button>
+    <button class="chip" id="pressChip" type="button" aria-pressed="false">Long-press bulk-mark</button></div>
+
+  <h3 class="shead">Bulk actions</h3>
+  <div class="frow"><span class="flabel">Sections</span>
+    <button class="linkbtn" id="collapseAll" type="button">Collapse all</button>
+    <button class="linkbtn" id="expandAll" type="button">Expand all</button></div>
+  <div class="frow"><span class="flabel">Mark era</span>
+    <select class="search" id="bulkEra" aria-label="Era to mark"></select>
+    <button class="linkbtn" id="bulkEraRead" type="button">mark read</button>
+    <button class="linkbtn" id="bulkEraUnread" type="button">mark unread</button></div>
+  <div class="frow"><span class="flabel">Mark range</span>
+    <select class="search" id="bulkFrom" aria-label="Range start"></select>
+    <span class="flabel" style="width:auto">through</span>
+    <select class="search" id="bulkTo" aria-label="Range end"></select>
+    <button class="linkbtn" id="bulkRangeRead" type="button">mark read</button></div>
+  <div class="frow"><span class="flabel">Presets</span>
+    <span class="presetRow" id="presetRow"></span>
+    <button class="linkbtn" id="savePreset" type="button">save current filters</button></div>
+  <h3 class="shead">Data</h3>
+  <div class="frow"><span class="flabel">Data</span>
+    <button class="linkbtn" id="aboutBtn" type="button">about &amp; legend</button>
+    <button class="linkbtn" id="bmBtn" type="button">bookmarks</button>
+    <button class="linkbtn" id="syncBtn" type="button">sync to another device</button>
+    <button class="linkbtn" id="clearBtn" type="button">clear all progress</button></div>
+  <div class="sync" id="syncBox" hidden></div>
+  <div id="aboutBox" hidden style="font-size:13px;max-width:78ch;color:var(--ink-soft)"></div>
+</section>
+<div class="mini" id="mini"><i style="width:0%"></i></div>
+
+<div class="toast" id="toast" hidden role="status" aria-live="polite"><span id="toastMsg"></span><button id="toastAct" type="button" hidden></button></div>
+
+<main id="app" aria-busy="true">
+  <p style="padding:24px 14px;color:var(--ink-soft)">Loading the checklist…</p>
+</main>
+
+<section class="pane" id="paneReading" hidden aria-label="Reading"><div class="rdr" id="rdr"></div></section>
+<section class="pane" id="paneReviews" hidden aria-label="Reviews"></section>
+
+<section class="pane" id="paneReading" hidden role="tabpanel" aria-label="Reading"></section>
+<section class="pane" id="paneReviews" hidden role="tabpanel" aria-label="Reviews"></section>
+
+<script src="./qrcode.js"></script>
+<script src="./data.js"></script>
+<script>
+(function () {
+  'use strict';
+  var D = window.TRACKER_DATA;
+  var FB = 1, SKIP = 2, ALT = 4, GAP = 8, RENUM = 16;
+  var INERT = GAP | RENUM;
+  var CYCLE = ['unread', 'reading', 'read', 'skip'];
+  var GLYPH = { unread: '\u2610', reading: '\u25D0', read: '\u2713', skip: '\u2298' };
+  var LABEL = { unread: 'Unread', reading: 'Reading', read: 'Read', skip: 'Skipped' };
+  /* Storage keys are namespaced per franchise. Every tracker on the same
+     GitHub Pages account shares one localStorage origin, so a hardcoded
+     prefix would let a new tracker overwrite an existing one's progress. */
+  var NS = ((D.franchise && D.franchise.key) || 'tracker') + ':v1:';
+  var K = { progress: NS + 'progress', settings: NS + 'settings' };
+
+  var ALLSTRANDS = (1 << D.strands.length) - 1;
+  var state = {
+    progress: {},
+    settings: { theme: 'default', eraScheme: 'split', cloneOrder: 'epic', viewOrder: 'reading', layout: 'tabs', lv: 2, tab: 'app', collapsed: [], pcollapsed: [] },
+    filters: { depth: 'everything', types: D.types.slice(), strands: ALLSTRANDS, sv: D.strands.length, mo: ['M','O'], annuals: true,
+               unreadOnly: false, alt: true, q: '' }
+  };
+  var K2 = NS + 'filters';
+  var K3 = NS + 'reviews';
+  var MARKS = {
+    box:  { unread: '\u2610', reading: '\u25D0', read: '\u2713', skip: '\u2298' },
+    dot:  { unread: '\u25CB', reading: '\u25D1', read: '\u25CF', skip: '\u2296' },
+    web:  { unread: '\u00B7', reading: '\u25CC', read: '\u2716', skip: '\u2013' }
+  };
+  var PACE = [['light', 5], ['steady', 12], ['heavy', 25], ['marathon', 50]];
+  var view = { density: 'normal', font: 'md', mark: 'box', table: false, badges: true,
+               dys: false, tap: false, mini: true, pace: 12, presets: [],
+               combo: false, rev: false, hideSkip: false, notesOnly: false,
+               reveal: false, auto: false, swipe: false, press: false, bg: 0 };
+  var reviews = {}, bookmarks = [];
+
+  /* ---------- storage shim ----------
+     window.storage is provided by the Claude artifact host. On a plain web host
+     (GitHub Pages) it does not exist, so nothing would persist. This installs an
+     API-compatible localStorage-backed implementation ONLY when it is missing —
+     inside Claude this block does nothing and the real storage is used. The app
+     code below still never touches localStorage directly. */
+  if (!window.storage) {
+    var LS = null;
+    try { LS = window.localStorage; LS.setItem('__t', '1'); LS.removeItem('__t'); }
+    catch (e) { LS = null; }
+    var MEM = {};
+    var P = function (v) { return Promise.resolve(v); };
+    window.storage = {
+      get: function (k) {
+        try { var v = LS ? LS.getItem(k) : MEM[k];
+              return P(v == null ? null : { key: k, value: v, shared: false }); }
+        catch (e) { return P(null); }
+      },
+      set: function (k, v) {
+        try { if (LS) LS.setItem(k, v); else MEM[k] = v;
+              return P({ key: k, value: v, shared: false }); }
+        catch (e) { return P(null); }
+      },
+      delete: function (k) {
+        try { if (LS) LS.removeItem(k); else delete MEM[k];
+              return P({ key: k, deleted: true, shared: false }); }
+        catch (e) { return P(null); }
+      },
+      list: function (prefix) {
+        try {
+          var keys = [];
+          if (LS) { for (var i = 0; i < LS.length; i++) keys.push(LS.key(i)); }
+          else { keys = Object.keys(MEM); }
+          if (prefix) keys = keys.filter(function (k) { return k.indexOf(prefix) === 0; });
+          return P({ keys: keys, prefix: prefix, shared: false });
+        } catch (e) { return P({ keys: [], shared: false }); }
+      }
+    };
+  }
+
+  /* ---------- storage: window.storage only, batched, graceful first run ---------- */
+  var pending = {}, timer = null;
+  function flush() {
+    timer = null;
+    Object.keys(pending).forEach(function (key) {
+      var val = pending[key]; delete pending[key];
+      try { var p = window.storage.set(key, JSON.stringify(val), false);
+            if (p && p.catch) p.catch(function (e) { console.warn('save failed', key, e); }); }
+      catch (e) { console.warn('save failed', key, e); }
+    });
+  }
+  function save(key, val) {
+    pending[key] = val;
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(flush, 400);
+  }
+  function load(key, fallback) {
+    if (!window.storage) return Promise.resolve(fallback);
+    return window.storage.get(key, false)
+      .then(function (r) { return r && r.value ? JSON.parse(r.value) : fallback; })
+      .catch(function () { return fallback; });
+  }
+
+  /* ---------- ordering ---------- */
+  var IDX = {};
+  (D.issues || []).forEach(function (r, i) { IDX[r[0]] = i; });
+
+  var ELSE_P = (D.periods && D.periods.length) ? D.periods.length - 1 : -1;
+
+  function ordered() {
+    var alt = state.settings.cloneOrder === 'published';
+    var tl = state.settings.viewOrder === 'timeline';
+    // period first, so the Elseworlds band renders once at the end instead of
+    // fragmenting into a band per scattered row; within a period, sort key
+    var PI = D.issuePeriod || [];
+    var pOf = {};
+    D.issues.forEach(function (r, i) { pOf[r[0]] = PI[i] || 0; });
+    return D.issues.slice().sort(function (a, b) {
+      if (tl && a[2] !== b[2]) return a[2] - b[2];
+      if (!tl && pOf[a[0]] !== pOf[b[0]]) {
+        return view.rev ? pOf[b[0]] - pOf[a[0]] : pOf[a[0]] - pOf[b[0]];
+      }
+      // Elseworlds rows are grouped by story, so a story's issues must sort
+      // together rather than scattering across sixty years of cover dates
+      if (!tl && pOf[a[0]] === ELSE_P) {
+        var ea = eraOf(a), eb = eraOf(b);
+        if (ea !== eb) return ea - eb;
+      }
+      var ka = alt && a.length > 8 ? a[8] : a[0];
+      var kb = alt && b.length > 8 ? b[8] : b[0];
+      return (!tl && view.rev) ? kb - ka : ka - kb;
+    });
+  }
+
+  /* ---------- progress ---------- */
+  function counts() {
+    var done = 0, total = 0;
+    D.issues.forEach(function (it) {
+      if (it[6] & INERT) return;
+      total++;
+      var s = state.progress[it[0]];
+      if (s === 'read' || s === 'skip') done++;
+    });
+    return { done: done, total: total };
+  }
+  function paintProgress() {
+    var c = counts(), pc = c.total ? Math.round(c.done / c.total * 100) : 0;
+    document.getElementById('count').textContent = c.done.toLocaleString() + ' / ' + c.total.toLocaleString();
+    document.getElementById('pct').textContent = pc + '%';
+    document.getElementById('pfill').style.width = pc + '%';
+    document.getElementById('pbar').setAttribute('aria-valuenow', pc);
+    paintMini(); paintPace(); paintPullHead();
+  }
+
+  function paintPullHead() {
+    var f = document.getElementById('pfill2');
+    if (!f) return;
+    var c = counts(), pc = c.total ? Math.round(c.done / c.total * 100) : 0;
+    f.style.width = pc + '%';
+    document.getElementById('pread').textContent =
+      c.done.toLocaleString() + ' / ' + c.total.toLocaleString() + ' read';
+    var left = c.total - c.done;
+    document.getElementById('premain').textContent =
+      left ? (left / view.pace * 7 / 24).toFixed(1).replace(/\.0$/, '') + 'd remaining' : 'all caught up';
+  }
+
+  /* ---------- helpers ---------- */
+  function el(tag, cls, txt) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (txt != null) n.textContent = txt;
+    return n;
+  }
+  function muURL(title) {
+    var base = (D.franchise && D.franchise.search_url) || 'https://www.google.com/search?q=';
+    return base + encodeURIComponent(title.replace(/\s+—.*$/, ''));
+  }
+
+  /* ---------- render ---------- */
+  function render() {
+    var app = document.getElementById('app');
+    app.textContent = '';
+    var rows = ordered();
+    var frag = document.createDocumentFragment();
+    var curEra = -1, curArc = -1, eraBody = null, arcBox = null;
+    var eraSeen = {}, arcSeen = {};
+    var curPer = -1, perBody = null;
+    var PIDX = {};
+    D.issues.forEach(function (r, i) { PIDX[r[0]] = D.issuePeriod[i]; });
+
+    rows.forEach(function (it) {
+      var arc = D.arcs[it[2]];
+
+      var per = PIDX[it[0]];
+      if (D.periods && D.periods.length && per !== curPer) {
+        curPer = per; curEra = -1; curArc = -1;
+        var pd = D.periods[per];
+        var psec = el('section', 'period');
+        psec.dataset.p = per;
+        var popen = (state.settings.pcollapsed || []).indexOf(per) === -1;
+        psec.setAttribute('aria-expanded', popen ? 'true' : 'false');
+
+        var phd = el('button', 'period-head');
+        phd.type = 'button';
+        phd.appendChild(el('span', 'chev', '\u25BE'));
+        var pw = el('span', 'ptext');
+        pw.appendChild(el('span', 'pname', pd.n));
+        pw.appendChild(el('span', 'pyears', pd.y));
+        phd.appendChild(pw);
+        var pn = el('span', 'n');
+        phd.appendChild(pn);
+        psec.appendChild(phd);
+
+        perBody = el('div', 'period-body');
+        perBody.hidden = !popen;
+        if (pd.b) perBody.appendChild(el('p', 'period-intro', pd.b));
+        psec.appendChild(perBody);
+
+        phd.addEventListener('click', function () {
+          var open = psec.getAttribute('aria-expanded') === 'true';
+          psec.setAttribute('aria-expanded', open ? 'false' : 'true');
+          psec.querySelector('.period-body').hidden = open;
+          state.settings.pcollapsed = state.settings.pcollapsed || [];
+          var i = state.settings.pcollapsed.indexOf(per);
+          if (open && i === -1) state.settings.pcollapsed.push(per);
+          if (!open && i !== -1) state.settings.pcollapsed.splice(i, 1);
+          save(K.settings, state.settings);
+        });
+
+        psec._count = pn;
+        frag.appendChild(psec);
+      }
+
+      var _era = eraOf(it);
+      if (_era !== curEra) {
+        curEra = _era; curArc = -1;
+        var era = D.eras[curEra];
+        var sec = el('section', 'era');
+        sec.dataset.e = curEra;
+        var open = state.settings.collapsed.indexOf(curEra) === -1;
+        sec.setAttribute('aria-expanded', open ? 'true' : 'false');
+
+        var repeat = !!eraSeen[curEra]; eraSeen[curEra] = 1;
+        var head = el('button', 'era-head');
+        head.type = 'button';
+        head.setAttribute('aria-controls', 'era-body-' + curEra);
+        head.appendChild(el('span', 'chev', '\u25BE'));
+        var h2 = el('h2', null, era.n); head.appendChild(h2);
+        if (repeat) head.appendChild(el('span', 'cont', 'cont.'));
+        var n = el('span', 'n'); head.appendChild(n);
+        sec.appendChild(head);
+
+        eraBody = el('div', 'era-body');
+        eraBody.id = 'era-body-' + curEra;
+        if (era.intro && !repeat) eraBody.appendChild(el('p', 'era-intro', era.intro));
+        eraBody.hidden = !open;
+        sec.appendChild(eraBody);
+
+        head.addEventListener('click', function () {
+          var eIdx = sec.dataset.e * 1;
+          var nowOpen = sec.getAttribute('aria-expanded') === 'true';
+          document.querySelectorAll('.era[data-e="' + eIdx + '"]').forEach(function (band) {
+            band.setAttribute('aria-expanded', nowOpen ? 'false' : 'true');
+            band.querySelector('.era-body').hidden = nowOpen;
+          });
+          var i = state.settings.collapsed.indexOf(eIdx);
+          if (nowOpen && i === -1) state.settings.collapsed.push(eIdx);
+          if (!nowOpen && i !== -1) state.settings.collapsed.splice(i, 1);
+          save(K.settings, state.settings);
+        });
+        sec._count = n;
+        (perBody || frag).appendChild(sec);
+      }
+
+      if (it[2] !== curArc) {
+        curArc = it[2];
+        var arcRepeat = !!arcSeen[curArc]; arcSeen[curArc] = 1;
+        arcBox = el('div', 'arc');
+        arcBox.dataset.a = curArc;
+        eraBody.appendChild(arcBox);
+        var ah = el('div', 'arc-head');
+        ah.appendChild(el('h3', null, arc.n + (arcRepeat ? ' \u00B7 cont.' : '')));
+        var bits = [];
+        if (arc.y) bits.push(arc.y);
+        if (arc.ti) bits.push(arc.ti);
+        if (bits.length) ah.appendChild(el('span', 'arc-meta', bits.join(' \u00B7 ')));
+        arcBox.appendChild(ah);
+        if (arc.b && !arcRepeat) arcBox.appendChild(el('p', 'blurb', arc.b));
+      }
+
+      arcBox.appendChild(buildRow(it));
+    });
+
+    app.appendChild(frag);
+    app.setAttribute('aria-busy', 'false');
+    tallyEras();
+    paintProgress();
+    paintMini();
+  }
+
+  function buildRow(it) {
+    var flags = it[6], isGap = !!(flags & GAP), isRenum = !!(flags & RENUM);
+    var row = el('div', 'row' + (isGap ? ' gap' : '') + (isRenum ? ' renum' : ''));
+    row.dataset.k = it[0];
+    row._it = it;
+
+    if (isGap || isRenum) {
+      var m = el('span', 'mark', isRenum ? '\u27F3' : '\u21B7');
+      m.setAttribute('aria-hidden', 'true');
+      row.appendChild(m);
+      row.appendChild(el('span', 'title', it[7] || it[1]));
+      return row;
+    }
+
+    var st = state.progress[it[0]] || 'unread';
+    row.dataset.s = st;
+
+    var btn = el('button', 'mark', MARKS[view.mark][st]);
+    btn.type = 'button';
+    btn.dataset.act = 'mark';
+    btn.setAttribute('aria-label', it[1] + ' \u2014 ' + LABEL[st]);
+    row.appendChild(btn);
+
+    row.appendChild(el('span', 'title', it[1]));
+    row.appendChild(el('span', 'arclab', D.arcs[it[2]].n));
+
+    var badges = el('span', 'badges');
+    if (it[5]) badges.appendChild(el('span', 'b core', '\u2605 core'));
+
+    if (flags & FB) badges.appendChild(noteBadge(row, '\u21BA flashback',
+      it[7] || 'Published later than it reads \u2014 this story fills in earlier events.'));
+    if (flags & ALT) badges.appendChild(noteBadge(row, 'alt',
+      it[7] || 'A separate continuity from the main line.'));
+
+    var bm = el('button', 'b bm', '\u2606');
+    bm.type = 'button';
+    bm.setAttribute('aria-label', 'Bookmark ' + it[1]);
+    bm.setAttribute('aria-pressed', bookmarks.indexOf(it[0]) !== -1 ? 'true' : 'false');
+    bm.dataset.act = 'bm';
+    badges.appendChild(bm);
+
+    var rv = el('button', 'b', '\u270E');
+    rv.type = 'button';
+    rv.setAttribute('aria-label', 'Review ' + it[1]);
+    rv.dataset.act = 'rv';
+    badges.appendChild(rv);
+    if (reviews[it[0]]) row.classList.add('reviewed');
+
+    var mu = el('a', 'b mu', 'read \u2197');
+    mu.href = muURL(it[1]); mu.target = '_blank'; mu.rel = 'noopener';
+    mu.title = 'Look up ' + it[1];
+    badges.appendChild(mu);
+    row.appendChild(badges);
+
+    if (it[7] && !(flags & (FB | ALT))) row.appendChild(el('span', 'subnote', it[7]));
+    return row;
+  }
+
+  function noteBadge(row, label, text) {
+    var b = el('button', 'b note', label);
+    b.type = 'button';
+    b.setAttribute('aria-expanded', 'false');
+    b.dataset.act = 'note';
+    b.dataset.text = text;
+    return b;
+  }
+
+  /* ---------- delegated row actions ----------
+     One listener on the list instead of three per row. At ~4,700 rows that is
+     ~14,000 closures removed, which is where the scroll cost was coming from.
+     Rows are rebuilt on every render, so per-row handlers were also being
+     re-created each time; a delegated handler survives re-renders. */
+  function wireRowActions() {
+    var host = document.getElementById('app');
+    if (!host || host._wired) return;
+    host._wired = true;
+    host.addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-act]');
+      if (!b || !host.contains(b)) return;
+      var row = b.closest('.row');
+      if (!row || !row._it) return;
+      var it = row._it, act = b.dataset.act;
+
+      if (act === 'mark') {
+        var next = CYCLE[(CYCLE.indexOf(row.dataset.s) + 1) % 4];
+        row.dataset.s = next;
+        b.textContent = MARKS[view.mark][next];
+        b.setAttribute('aria-label', it[1] + ' \u2014 ' + LABEL[next]);
+        if (next === 'unread') delete state.progress[it[0]]; else state.progress[it[0]] = next;
+        saveProgress();
+        paintProgress(); tallyEras();
+        return;
+      }
+      if (act === 'bm') {
+        var i = bookmarks.indexOf(it[0]);
+        if (i === -1) bookmarks.push(it[0]); else bookmarks.splice(i, 1);
+        b.setAttribute('aria-pressed', i === -1 ? 'true' : 'false');
+        saveProgress();
+        return;
+      }
+      if (act === 'rv') { reviewEditor(row, it); return; }
+      if (act === 'note') {
+        var open = b.getAttribute('aria-expanded') === 'true';
+        b.setAttribute('aria-expanded', open ? 'false' : 'true');
+        if (open) { if (row._pop) { row._pop.remove(); row._pop = null; } return; }
+        var p = el('p', 'notepop', b.dataset.text || '');
+        row.after(p); row._pop = p;
+      }
+    });
+  }
+
+  function tallyEras() {
+    function tally(sel) {
+      document.querySelectorAll(sel).forEach(function (sec) {
+        var done = 0, total = 0;
+        sec.querySelectorAll('.row:not(.gap)').forEach(function (r) {
+          if (r.hidden) return;            // count only what the filters left
+          total++;
+          if (r.dataset.s === 'read' || r.dataset.s === 'skip') done++;
+        });
+        if (sec._count) sec._count.textContent = done + ' / ' + total;
+      });
+    }
+    tally('.period');
+    tally('.era');
+  }
+
+
+  /* ---------- filters ---------- */
+  function chip(label, pressed, onClick, cls) {
+    var b = el('button', 'chip' + (cls ? ' ' + cls : ''), label);
+    b.type = 'button';
+    b.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+    b.addEventListener('click', function () {
+      var now = b.getAttribute('aria-pressed') === 'true';
+      b.setAttribute('aria-pressed', now ? 'false' : 'true');
+      onClick(!now);
+      saveFilters(); applyFilters();
+    });
+    return b;
+  }
+  function saveFilters() { save(K2, state.filters); }
+
+  function buildFilterUI() {
+    var f = state.filters;
+
+    var dWrap = document.getElementById('depthChips');
+    [['core', 'Barebones', D.counts.core], ['essential', 'Essential', D.counts.essential],
+     ['everything', 'Everything', D.counts.total]].forEach(function (d) {
+      var b = el('button', 'chip', d[1] + ' \u00B7 ' + d[2].toLocaleString());
+      b.type = 'button';
+      b.setAttribute('aria-pressed', f.depth === d[0] ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        f.depth = d[0];
+        dWrap.querySelectorAll('.chip').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+        b.setAttribute('aria-pressed', 'true');
+        saveFilters(); applyFilters();
+      });
+      dWrap.appendChild(b);
+    });
+
+    var tWrap = document.getElementById('typeChips');
+    D.types.forEach(function (t) {
+      tWrap.appendChild(chip(t.toLowerCase(), f.types.indexOf(t) !== -1, function (on) {
+        var i = f.types.indexOf(t);
+        if (on && i === -1) f.types.push(t);
+        if (!on && i !== -1) f.types.splice(i, 1);
+      }));
+    });
+
+    var mWrap = document.getElementById('moChips');
+    [['M', 'Mandatory'], ['O', 'Optional']].forEach(function (p) {
+      mWrap.appendChild(chip(p[1], (f.mo || ['M','O']).indexOf(p[0]) !== -1, function (on) {
+        f.mo = f.mo || ['M', 'O'];
+        var i = f.mo.indexOf(p[0]);
+        if (on && i === -1) f.mo.push(p[0]);
+        if (!on && i !== -1) f.mo.splice(i, 1);
+      }));
+    });
+
+    var fWrap = document.getElementById('fmtChips');
+    fWrap.appendChild(chip('Annuals', f.annuals !== false, function (on) { f.annuals = on; }));
+    // Ultimate is technically a spin-off type, but it is a large enough body of
+
+    var sWrap = document.getElementById('strandChips');
+    D.strands.forEach(function (name, i) {
+      sWrap.appendChild(chip(name, !!(f.strands >> i & 1), function (on) {
+        if (on) f.strands |= (1 << i); else f.strands &= ~(1 << i);
+      }, 'strand'));
+    });
+    // Ultimate lives with the characters rather than Format: it reads as a
+    // corner of the universe, not a publication format. Its own boolean, so
+    // the all/none strand shortcuts deliberately leave it alone.
+    document.getElementById('strandAll').addEventListener('click', function () {
+      f.strands = ALLSTRANDS; syncStrandChips(); saveFilters(); applyFilters();
+    });
+    document.getElementById('strandNone').addEventListener('click', function () {
+      f.strands = 0; syncStrandChips(); saveFilters(); applyFilters();
+    });
+
+    var eraSel = el('select', 'search');
+    eraSel.id = 'eraSel';
+    eraSel.setAttribute('aria-label', 'Filter by era');
+    var optAll = el('option', null, 'All eras'); optAll.value = '';
+    eraSel.appendChild(optAll);
+    D.eras.forEach(function (e, i) {
+      var o = el('option', null, e.n); o.value = i;
+      if (f.era === i) o.selected = true;
+      eraSel.appendChild(o);
+    });
+    eraSel.addEventListener('change', function () {
+      f.era = eraSel.value === '' ? null : eraSel.value * 1;
+      saveFilters(); applyFilters();
+    });
+    document.querySelector('#typeChips').after(eraSel);
+
+    var q = document.getElementById('search');
+    q.value = f.q || '';
+    var deb;
+    q.addEventListener('input', function () {
+      clearTimeout(deb);
+      deb = setTimeout(function () { f.q = q.value.trim(); saveFilters(); applyFilters(); }, 180);
+    });
+
+    var uc = document.getElementById('unreadChip');
+    uc.setAttribute('aria-pressed', f.unreadOnly ? 'true' : 'false');
+    uc.addEventListener('click', function () {
+      f.unreadOnly = !f.unreadOnly;
+      uc.setAttribute('aria-pressed', f.unreadOnly ? 'true' : 'false');
+      saveFilters(); applyFilters();
+    });
+
+    var ac = document.getElementById('altChip');
+    ac.setAttribute('aria-pressed', f.alt ? 'true' : 'false');
+    ac.addEventListener('click', function () {
+      f.alt = !f.alt;
+      ac.setAttribute('aria-pressed', f.alt ? 'true' : 'false');
+      saveFilters(); applyFilters();
+    });
+
+    var cc = document.getElementById('cloneChip');
+    function paintClone() {
+      var pub = state.settings.cloneOrder === 'published';
+      var dz = (D.franchise && D.franchise.dual_order) || { label: 'Order', a: 'A', b: 'B' };
+      cc.textContent = dz.label + ': ' + (pub ? dz.b : dz.a);
+      cc.setAttribute('aria-pressed', pub ? 'true' : 'false');
+    }
+    paintClone();
+    cc.addEventListener('click', function () {
+      state.settings.cloneOrder = state.settings.cloneOrder === 'epic' ? 'published' : 'epic';
+      paintClone(); save(K.settings, state.settings);
+      render(); applyFilters();
+    });
+
+    var oc = document.getElementById('orderChip');
+    function paintOrder() {
+      var tl = state.settings.viewOrder === 'timeline';
+      oc.textContent = 'Order: ' + (tl ? 'Timeline' : 'Reading');
+      oc.setAttribute('aria-pressed', tl ? 'true' : 'false');
+    }
+    paintOrder();
+    oc.addEventListener('click', function () {
+      state.settings.viewOrder = state.settings.viewOrder === 'reading' ? 'timeline' : 'reading';
+      paintOrder(); save(K.settings, state.settings);
+      render(); applyFilters();
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      state.filters = { depth: 'everything', types: D.types.slice(), strands: ALLSTRANDS, sv: D.strands.length, mo: ['M','O'], annuals: true,
+                        unreadOnly: false, alt: true, q: '', era: null };
+      saveFilters();
+      document.getElementById('search').value = '';
+      document.getElementById('eraSel').value = '';
+      syncAllChips();
+      applyFilters();
+    });
+
+    var fb = document.getElementById('filterBtn');
+    fb.addEventListener('click', function () {
+      var bar = document.getElementById('filters');
+      var open = !bar.hidden;
+      bar.hidden = open;
+      fb.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+  }
+
+  function syncStrandChips() {
+    document.querySelectorAll('#strandChips .chip').forEach(function (b, i) {
+      b.setAttribute('aria-pressed', (state.filters.strands >> i & 1) ? 'true' : 'false');
+    });
+  }
+  function syncAllChips() {
+    var f = state.filters;
+    document.querySelectorAll('#depthChips .chip').forEach(function (b, i) {
+      b.setAttribute('aria-pressed', ['core', 'essential', 'everything'][i] === f.depth ? 'true' : 'false');
+    });
+    document.querySelectorAll('#typeChips .chip').forEach(function (b, i) {
+      b.setAttribute('aria-pressed', f.types.indexOf(D.types[i]) !== -1 ? 'true' : 'false');
+    });
+    syncStrandChips();
+    document.getElementById('unreadChip').setAttribute('aria-pressed', f.unreadOnly ? 'true' : 'false');
+    document.getElementById('altChip').setAttribute('aria-pressed', f.alt ? 'true' : 'false');
+  }
+
+  function matches(it, arc) {
+    var f = state.filters, isGap = !!(it[6] & GAP);
+    if (f.era != null && eraOf(it) !== f.era) return false;
+    if (!(arc.s & f.strands)) return false;
+    if (!f.alt && (it[6] & ALT)) return false;
+    if (f.q) {
+      var hay = (it[1] + ' ' + arc.n + ' ' + (it[7] || '')).toLowerCase();
+      if (hay.indexOf(f.q.toLowerCase()) === -1) return false;
+    }
+    if (isGap || (it[6] & RENUM)) return true;
+    if (f.depth === 'core' && !it[5]) return false;
+    if (f.depth === 'essential' && !(it[4] || it[5])) return false;
+    if (f.types.indexOf(D.types[it[3]]) === -1) return false;
+    var mo = f.mo || ['M', 'O'];
+    if (mo.indexOf(it[4] ? 'M' : 'O') === -1) return false;
+    if (f.annuals === false && /\bannual\b/i.test(it[1])) return false;
+    if (f.unreadOnly && state.progress[it[0]]) return false;
+    if (view.hideSkip && state.progress[it[0]] === 'skip') return false;
+    if (view.notesOnly && !it[7]) return false;
+    return true;
+  }
+
+  function applyFilters() {
+    var shown = 0;
+    document.querySelectorAll('.row').forEach(function (row) {
+      var it = row._it, ok = matches(it, D.arcs[it[2]]);
+      row.hidden = !ok;
+      if (ok && !(it[6] & INERT)) shown++;
+      if (row._pop && !ok) { row._pop.remove(); row._pop = null; }
+    });
+    document.querySelectorAll('.arc').forEach(function (a) {
+      a.hidden = !a.querySelector('.row:not([hidden])');
+    });
+    document.querySelectorAll('.era').forEach(function (e) {
+      e.hidden = !e.querySelector('.arc:not([hidden])');
+    });
+    // period bands were added after this function was written and never got
+    // the same pass — a filtered-out band left an empty header behind
+    document.querySelectorAll('.period').forEach(function (p) {
+      p.hidden = !p.querySelector('.era:not([hidden])');
+    });
+    tallyEras();
+    var t = document.getElementById('tally');
+    if (t) t.textContent = shown.toLocaleString() + ' shown';
+    var app = document.getElementById('app');
+    var none = app.querySelector('.empty');
+    if (!shown) {
+      if (!none) { none = el('p', 'empty', 'Nothing matches these filters.'); app.appendChild(none); }
+    } else if (none) none.remove();
+  }
+
+
+  /* ---------- settings ---------- */
+  function saveProgress() { save(K.progress, { p: state.progress, b: bookmarks }); }
+  function saveView() { state.settings.view = view; save(K.settings, state.settings); }
+
+  function applyView() {
+    var r = document.documentElement;
+    r.dataset.table = view.table ? '1' : '0';
+    r.dataset.badges = view.badges ? '1' : '0';
+    r.dataset.dys = view.dys ? '1' : '0';
+    r.dataset.tap = view.tap ? '1' : '0';
+    r.dataset.combo = view.combo ? '1' : '0';
+    r.dataset.reveal = view.reveal ? '1' : '0';
+    r.dataset.bg = String(view.bg || 0);
+    r.style.setProperty('--dens', { compact: '4px', normal: '9px', roomy: '14px' }[view.density]);
+    r.style.setProperty('--fs', { sm: '13.5px', md: '15px', lg: '17px' }[view.font]);
+    var m = document.getElementById('mini');
+    if (m) m.hidden = !view.mini;
+    paintPace();
+  }
+
+  function seg(host, opts, current, onPick) {
+    host.textContent = '';
+    opts.forEach(function (o) {
+      var b = el('button', null, o[1]);
+      b.type = 'button';
+      b.setAttribute('aria-pressed', o[0] === current() ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        onPick(o[0]);
+        host.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+        b.setAttribute('aria-pressed', 'true');
+        saveView(); applyView();
+      });
+      host.appendChild(b);
+    });
+  }
+
+  function paintPace() {
+    var c = counts(), left = c.total - c.done, out = document.getElementById('paceOut');
+    if (!out) return;
+    if (!left) { out.textContent = 'All caught up.'; return; }
+    var weeks = Math.ceil(left / view.pace);
+    var done = new Date(Date.now() + weeks * 7 * 864e5);
+    out.innerHTML = '<b>' + left.toLocaleString() + '</b> left \u00B7 ' + weeks + ' weeks at ' +
+      view.pace + '/week \u00B7 done ' + done.toLocaleDateString(undefined, { month: 'short', year: 'numeric' });
+  }
+
+  function paintMini() {
+    var c = counts(), m = document.getElementById('mini');
+    if (m && m.firstElementChild) m.firstElementChild.style.width = (c.total ? c.done / c.total * 100 : 0) + '%';
+  }
+
+  /* ---------- layout shell: 'classic' (settings dropdown) or 'tabs' (X-Men style) ---------- */
+  var PANES = ['app', 'paneReading', 'paneReviews', 'panel'];
+
+  function eraOf(it) {
+    var i = IDX[it[0]];
+    if (D.issueEra && D.issueEra.length && i !== undefined) return D.issueEra[i];
+    return D.arcs[it[2]].e;
+  }
+
+  /* QR codes carry this prefix so a code from one tracker cannot be imported
+     into another. Derived from the franchise key, not hardcoded. */
+  var QRTAG = (((D.franchise && D.franchise.key) || 'trk').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 4) || 'TRK') + '1:';
+
+  function applyFranchise() {
+    var f = D.franchise || {};
+    if (f.title) document.title = f.title;
+    var wm = document.getElementById('wordmark');
+    if (wm) wm.textContent = f.wordmark || '';
+    var sl = document.getElementById('strapline');
+    if (sl) sl.textContent = f.strapline || '';
+    if (f.theme) {
+      var m = document.querySelector('meta[name="theme-color"]');
+      if (m) m.setAttribute('content', f.theme);
+    }
+    var at = document.querySelector('meta[name="apple-mobile-web-app-title"]');
+    if (at && f.wordmark) at.setAttribute('content', f.wordmark);
+    // the dual-order toggle is optional — hide it unless the franchise has one
+    var cc = document.getElementById('cloneChip');
+    if (cc && !f.dual_order) cc.hidden = true;
+  }
+
+  function isTabbed() {
+    var l = state.settings.layout;
+    return l === 'tabs' || l === 'pull';
+  }
+
+  // The skin is pure CSS. If styles.css on the server predates v16 the rules
+  // simply are not there and "classic" silently renders as the plain tabbed
+  // shell — which looks like a broken feature rather than a stale file.
+  function skinCssPresent() {
+    var probe = document.createElement('div');
+    probe.setAttribute('data-skinprobe', '');
+    probe.style.cssText = 'position:absolute;left:-9999px';
+    document.body.appendChild(probe);
+    var got = getComputedStyle(probe).getPropertyValue('--skin-ok').trim();
+    probe.remove();
+    return got === '1';
+  }
+
+  function applyLayout() {
+    var lay = state.settings.layout;
+    var tabs = (lay === 'tabs' || lay === 'pull');
+    document.documentElement.dataset.layout = tabs ? 'tabs' : 'classic';
+    // 'pull' is the X-Men Pull List look: same tab structure, different skin
+    if (lay === 'pull') document.documentElement.dataset.skin = 'pull';
+    else document.documentElement.removeAttribute('data-skin');
+    document.getElementById('tabs').hidden = !tabs;
+    document.getElementById('phead').hidden = !tabs;
+    var tb = document.querySelector('.topbar');
+    if (tb) tb.hidden = tabs;
+    // tabs mode has no topbar, so the filter toggle is unreachable —
+    // show the filter panel inline on the Checklist the way X-Men does
+    var fsec = document.getElementById('filters');
+    if (fsec) fsec.hidden = tabs ? (state.settings.tab !== 'app') : true;
+    if (tabs) paintPullHead();
+    var sb = document.getElementById('setBtn');
+    if (sb) sb.hidden = tabs;
+    if (state.settings.layout === 'pull' && !skinCssPresent()) {
+      setTimeout(function () {
+        toast('Classic skin needs the current styles.css — re-upload it.', 'Use tabbed', function () {
+          state.settings.layout = 'tabs'; save(K.settings, state.settings); applyLayout();
+        });
+      }, 600);
+    }
+    if (tabs) { switchTab(state.settings.tab || 'app'); }
+    else {
+      document.getElementById('app').hidden = false;
+      document.getElementById('paneReading').hidden = true;
+      document.getElementById('paneReviews').hidden = true;
+      document.getElementById('panel').hidden = true;
+      if (sb) sb.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  function switchTab(pane) {
+    if (PANES.indexOf(pane) === -1) pane = 'app';
+    state.settings.tab = pane;
+    PANES.forEach(function (p) {
+      var n = document.getElementById(p);
+      if (n) n.hidden = (p !== pane);
+    });
+    document.querySelectorAll('#tabs .tab').forEach(function (b) {
+      b.setAttribute('aria-selected', b.dataset.pane === pane ? 'true' : 'false');
+    });
+    var fb = document.getElementById('filterBtn');
+    if (fb) fb.hidden = (pane !== 'app');
+    if (pane === 'paneReading') renderReading();
+    if (pane === 'paneReviews') renderReviews();
+    if (pane === 'panel') paintPace();
+    save(K.settings, state.settings);
+  }
+
+  function jumpToIssue(k) {
+    if (isTabbed()) switchTab('app');
+    setTimeout(function () {
+      var n = document.querySelector('.row[data-k="' + k + '"]');
+      if (n) { n.scrollIntoView({ block: 'center' }); flash(n); }
+      else toast('That issue is hidden by the current filters.');
+    }, 30);
+  }
+
+
+  /* ---------- Reading: focused one-issue stepper ---------- */
+  var rdrIdx = 0;
+
+  function rdrList() {
+    return ordered().filter(function (it) { return !(it[6] & INERT); });
+  }
+
+  function renderReading() {
+    var pane = document.getElementById('paneReading');
+    pane.textContent = '';
+    var host = el('div', 'rdr');
+    pane.appendChild(host);
+    var list = rdrList();
+    if (!list.length) { host.appendChild(el('p', 'pempty', 'Nothing matches the current filters.')); return; }
+
+    // resume at the first unread unless the user has already stepped somewhere
+    if (rdrIdx == null || rdrIdx < 0 || rdrIdx >= list.length) rdrIdx = 0;
+    if (!rdrTouched) {
+      for (var i = 0; i < list.length; i++) {
+        if (!state.progress[list[i][0]]) { rdrIdx = i; break; }
+      }
+    }
+    var it = list[rdrIdx], arc = D.arcs[it[2]] || {};
+
+    host.appendChild(el('p', 'rcount', (rdrIdx + 1).toLocaleString() + ' of ' + list.length.toLocaleString()));
+
+    var era = D.eras[eraOf(it)] || { n: '' };
+    var pill = el('span', 'rpill', era.n.replace(/\s*\(.*\)\s*$/, ''));
+    pill.style.background = 'var(--e' + eraOf(it) + '-a)';
+    var pw = el('div', 'rpillwrap'); pw.appendChild(pill); host.appendChild(pw);
+
+    host.appendChild(el('h2', 'rtitle', it[1]));
+    host.appendChild(el('p', 'rmeta', (arc.n || '') + ' \u00B7 ' + (D.types[it[3]] || '')));
+    if (it[7]) host.appendChild(el('p', 'rnote', it[7]));
+    if (arc.b) { host.appendChild(el('hr', 'rrule')); host.appendChild(el('p', 'rblurb', arc.b)); }
+
+    var st = state.progress[it[0]] || 'unread';
+    var acts = el('div', 'racts');
+    var skip = el('button', 'rbtn ghost', st === 'skip' ? 'Skipped' : 'Skip');
+    skip.type = 'button';
+    skip.addEventListener('click', function () { setRdr(it, st === 'skip' ? 'unread' : 'skip'); });
+    var read = el('button', 'rbtn solid', st === 'read' ? 'Read \u2713' : 'Mark Read');
+    read.type = 'button';
+    read.addEventListener('click', function () { setRdr(it, st === 'read' ? 'unread' : 'read'); });
+    acts.appendChild(skip); acts.appendChild(read); host.appendChild(acts);
+
+    var nav = el('div', 'rnav');
+    var prev = el('button', 'rlink', '\u2190 Previous'); prev.type = 'button';
+    prev.disabled = rdrIdx === 0;
+    prev.addEventListener('click', function () { rdrTouched = true; rdrIdx--; renderReading(); });
+    var pinned = bookmarks.indexOf(it[0]) !== -1;
+    var pin = el('button', 'rlink', (pinned ? '\u2605 Pinned' : '\u2606 Pin for later'));
+    pin.type = 'button';
+    pin.addEventListener('click', function () {
+      var i = bookmarks.indexOf(it[0]);
+      if (i === -1) bookmarks.push(it[0]); else bookmarks.splice(i, 1);
+      saveProgress(); renderReading();
+    });
+    var next = el('button', 'rlink', 'Next \u2192'); next.type = 'button';
+    next.disabled = rdrIdx >= list.length - 1;
+    next.addEventListener('click', function () { rdrTouched = true; rdrIdx++; renderReading(); });
+    nav.appendChild(prev); nav.appendChild(pin); nav.appendChild(next);
+    host.appendChild(nav);
+  }
+
+  var rdrTouched = false;
+  function setRdr(it, next) {
+    if (next === 'unread') delete state.progress[it[0]]; else state.progress[it[0]] = next;
+    saveProgress();
+    var row = document.querySelector('.row[data-k="' + it[0] + '"]');
+    if (row) {
+      row.dataset.s = next;
+      var m = row.querySelector('.mark');
+      if (m) { m.textContent = MARKS[view.mark][next]; m.title = LABEL[next]; }
+    }
+    paintProgress(); paintPullHead();
+    var list = rdrList();
+    if (rdrIdx < list.length - 1) { rdrTouched = true; rdrIdx++; }
+    renderReading();
+  }
+
+  function buildSettingsUI() {
+    seg(document.getElementById('segLayout'),
+      [['compact', 'compact'], ['tabs', 'tabbed'], ['pull', 'classic']],
+      function () { return state.settings.layout; },
+      function (v) {
+        state.settings.layout = v;
+        // changing the layout should show you the layout — landing back on the
+        // Settings tab makes it look as though the filters have disappeared
+        state.settings.tab = 'app';
+        save(K.settings, state.settings);
+        applyFranchise();
+      applyLayout();
+      });
+    seg(document.getElementById('segDensity'),
+      [['compact', 'compact'], ['normal', 'normal'], ['roomy', 'roomy']],
+      function () { return view.density; }, function (v) { view.density = v; });
+    seg(document.getElementById('segFont'),
+      [['sm', 'S'], ['md', 'M'], ['lg', 'L']],
+      function () { return view.font; }, function (v) { view.font = v; });
+    seg(document.getElementById('segMark'),
+      [['box', '\u2610 \u2713'], ['dot', '\u25CB \u25CF'], ['web', '\u00B7 \u2716']],
+      function () { return view.mark; }, function (v) { view.mark = v; repaintMarks(); });
+    seg(document.getElementById('segEraScheme'),
+      [['split', 'red + blue'], ['mono', 'all red']],
+      function () { return state.settings.eraScheme; },
+      function (v) { state.settings.eraScheme = v; document.documentElement.dataset.erascheme = v; save(K.settings, state.settings); });
+    seg(document.getElementById('segPace'),
+      PACE.map(function (p) { return [p[1], p[0]]; }),
+      function () { return view.pace; }, function (v) { view.pace = v; });
+
+    // pure display toggles: flip the flag, repaint, done
+    [['tableChip', 'table'], ['badgeChip', 'badges'], ['dysChip', 'dys'],
+     ['tapChip', 'tap'], ['miniChip', 'mini'], ['comboChip', 'combo'],
+     ['revealChip', 'reveal']].forEach(function (pair) {
+      var b = document.getElementById(pair[0]);
+      if (!b) return;
+      b.setAttribute('aria-pressed', view[pair[1]] ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        view[pair[1]] = !view[pair[1]];
+        b.setAttribute('aria-pressed', view[pair[1]] ? 'true' : 'false');
+        saveView(); applyView();
+      });
+    });
+
+    // toggles that change which rows show, or their order — these need a
+    // re-filter, and reversing the era order needs a full re-render
+    [['skipChip', 'hideSkip', false], ['notesChip', 'notesOnly', false],
+     ['revChip', 'rev', true], ['autoChip', 'auto', null]].forEach(function (t) {
+      var b = document.getElementById(t[0]);
+      if (!b) return;
+      b.setAttribute('aria-pressed', view[t[1]] ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        view[t[1]] = !view[t[1]];
+        b.setAttribute('aria-pressed', view[t[1]] ? 'true' : 'false');
+        saveView();
+        if (t[2] === true) { render(); applyFilters(); }
+        else if (t[2] === false) { applyFilters(); }
+        if (t[1] === 'auto' && view.auto) jumpFirstUnread();
+      });
+    });
+
+    /* ---------- bulk marking ---------- */
+    function eraRowsBetween(a, b) {
+      var lo = Math.min(a, b), hi = Math.max(a, b), out = [];
+      D.issues.forEach(function (it, i) {
+        if (it[6] & INERT) return;
+        var e = (D.issueEra && D.issueEra.length) ? D.issueEra[i] : D.arcs[it[2]].e;
+        if (e >= lo && e <= hi) out.push(it[0]);
+      });
+      return out;
+    }
+
+    function bulkMark(keys, val) {
+      keys.forEach(function (k) {
+        if (val === null) delete state.progress[k]; else state.progress[k] = val;
+      });
+      saveProgress();
+      document.querySelectorAll('.row').forEach(function (r) {
+        var k = Number(r.dataset.k);
+        if (keys.indexOf(k) === -1) return;
+        var s = state.progress[k] || 'unread';
+        r.dataset.s = s;
+        var m = r.querySelector('[data-act="mark"]');
+        if (m) m.textContent = MARKS[view.mark][s];
+      });
+      paintProgress(); tallyEras(); applyFilters();
+      toast(keys.length.toLocaleString() + (val === null ? ' cleared.' : ' marked ' + val + '.'), 'undo',
+            function () { keys.forEach(function (k) { delete state.progress[k]; });
+                          saveProgress(); render(); applyFilters(); });
+    }
+
+    function fillEraSelects() {
+      ['bulkEra', 'bulkFrom', 'bulkTo'].forEach(function (id) {
+        var s = document.getElementById(id);
+        if (!s) return;
+        s.textContent = '';
+        D.eras.forEach(function (e, i) {
+          var o = document.createElement('option');
+          o.value = String(i); o.textContent = e.n;
+          s.appendChild(o);
+        });
+      });
+      var t = document.getElementById('bulkTo');
+      if (t) t.value = String(D.eras.length - 1);
+    }
+    fillEraSelects();
+
+    function onClick(id, fn) { var b = document.getElementById(id); if (b) b.addEventListener('click', fn); }
+    onClick('bulkEraRead',   function () { var i = +document.getElementById('bulkEra').value; bulkMark(eraRowsBetween(i, i), 'read'); });
+    onClick('bulkEraUnread', function () { var i = +document.getElementById('bulkEra').value; bulkMark(eraRowsBetween(i, i), null); });
+    onClick('bulkRangeRead', function () {
+      bulkMark(eraRowsBetween(+document.getElementById('bulkFrom').value,
+                              +document.getElementById('bulkTo').value), 'read');
+    });
+
+    /* ---------- touch: swipe to mark, long-press to bulk-mark ---------- */
+    [['swipeChip', 'swipe'], ['pressChip', 'press']].forEach(function (p) {
+      var b = document.getElementById(p[0]);
+      if (!b) return;
+      b.setAttribute('aria-pressed', view[p[1]] ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        view[p[1]] = !view[p[1]];
+        b.setAttribute('aria-pressed', view[p[1]] ? 'true' : 'false');
+        saveView();
+      });
+    });
+
+    var host = document.getElementById('app');
+    if (host && !host._touch) {
+      host._touch = true;
+      var sx = 0, sy = 0, pressT = null, pressed = null;
+
+      host.addEventListener('touchstart', function (ev) {
+        var t = ev.touches[0]; sx = t.clientX; sy = t.clientY;
+        var head = ev.target.closest('.era-head, .arc-head, .period-head');
+        if (view.press && head) {
+          pressed = head;
+          pressT = setTimeout(function () {
+            var sec = head.closest('.era, .arc, .period');
+            var keys = [].map.call(sec.querySelectorAll('.row:not(.gap)'), function (r) { return Number(r.dataset.k); });
+            bulkMark(keys, 'read');
+            pressT = null;
+          }, 600);
+        }
+      }, { passive: true });
+
+      host.addEventListener('touchmove', function () {
+        if (pressT) { clearTimeout(pressT); pressT = null; }
+      }, { passive: true });
+
+      host.addEventListener('touchend', function (ev) {
+        if (pressT) { clearTimeout(pressT); pressT = null; }
+        if (!view.swipe) return;
+        var t = ev.changedTouches[0];
+        var dx = t.clientX - sx, dy = t.clientY - sy;
+        if (Math.abs(dx) < 60 || Math.abs(dy) > 40) return;
+        var row = ev.target.closest('.row');
+        if (!row || row.classList.contains('gap')) return;
+        var k = Number(row.dataset.k);
+        state.progress[k] = dx > 0 ? 'read' : 'skip';
+        row.dataset.s = state.progress[k];
+        var m = row.querySelector('[data-act="mark"]');
+        if (m) m.textContent = MARKS[view.mark][state.progress[k]];
+        saveProgress(); paintProgress(); tallyEras();
+      }, { passive: true });
+    }
+
+    var BGS = ['default', 'warm', 'grey', 'rose', 'mint', 'sky', 'lilac'];
+    (function () {
+      var row = document.getElementById('bgRow');
+      if (!row) return;
+      BGS.forEach(function (name, i) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'swatch';
+        b.dataset.bg = String(i);
+        b.title = name;
+        b.setAttribute('aria-label', 'Paper: ' + name);
+        b.setAttribute('aria-pressed', view.bg === i ? 'true' : 'false');
+        b.addEventListener('click', function () {
+          view.bg = i;
+          row.querySelectorAll('.swatch').forEach(function (s) {
+            s.setAttribute('aria-pressed', s.dataset.bg === String(i) ? 'true' : 'false');
+          });
+          saveView(); applyView();
+        });
+        row.appendChild(b);
+      });
+    })();
+
+    function jumpFirstUnread() {
+      var rows = document.querySelectorAll('.row:not([hidden]):not(.gap)');
+      for (var i = 0; i < rows.length; i++) {
+        if (!state.progress[rows[i].dataset.k]) {
+          rows[i].scrollIntoView({ block: 'center' }); flash(rows[i]); return;
+        }
+      }
+      toast('Nothing unread in view.');
+    }
+
+    document.querySelectorAll('#tabs .tab').forEach(function (t) {
+      t.addEventListener('click', function () { switchTab(t.dataset.pane); });
+    });
+
+    function setAllSections(collapsed) {
+      state.settings.pcollapsed = collapsed ? (D.periods || []).map(function (p, i) { return i; }) : [];
+      state.settings.collapsed  = collapsed ? D.eras.map(function (e, i) { return i; }) : [];
+      save(K.settings, state.settings);
+      document.querySelectorAll('.period').forEach(function (s) {
+        s.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+        s.querySelector('.period-body').hidden = collapsed;
+      });
+      document.querySelectorAll('.era').forEach(function (s) {
+        s.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+        s.querySelector('.era-body').hidden = collapsed;
+      });
+      toast(collapsed ? 'All sections collapsed.' : 'All sections expanded.');
+    }
+    var ca = document.getElementById('collapseAll'), ea = document.getElementById('expandAll');
+    if (ca) ca.addEventListener('click', function () { setAllSections(true); });
+    if (ea) ea.addEventListener('click', function () { setAllSections(false); });
+
+    var sbtn = document.getElementById('setBtn');
+    if (sbtn) sbtn.addEventListener('click', function () {
+      var p = document.getElementById('panel');
+      p.hidden = !p.hidden;
+      sbtn.setAttribute('aria-expanded', p.hidden ? 'false' : 'true');
+      if (!p.hidden) paintPace();
+    });
+    switchTab(state.settings.tab || 'app');
+
+    document.getElementById('savePreset').addEventListener('click', function () {
+      var name = prompt('Name this filter preset');
+      if (!name) return;
+      view.presets.push({ n: name, f: JSON.parse(JSON.stringify(state.filters)) });
+      saveView(); paintPresets();
+    });
+    paintPresets();
+
+    document.getElementById('aboutBtn').addEventListener('click', function () {
+      var box = document.getElementById('aboutBox');
+      box.hidden = !box.hidden;
+      if (!box.hidden && !box.childElementCount) {
+        D.legend.forEach(function (l) {
+          var p = el('p', null, l[1] ? l[0] + ' \u2014 ' + l[1] : l[0]);
+          p.style.margin = '2px 0'; box.appendChild(p);
+        });
+        var h = el('p', null, 'Maintenance notes'); h.style.cssText = 'margin:10px 0 2px;font-weight:600';
+        box.appendChild(h);
+        D.maintenance.forEach(function (m) {
+          var p = el('p', null, m); p.style.margin = '2px 0'; box.appendChild(p);
+        });
+      }
+    });
+
+    document.getElementById('bmBtn').addEventListener('click', function () {
+      if (!bookmarks.length) { alert('No bookmarks yet. Tap the \u2606 on any issue.'); return; }
+      var next = bookmarks[0];
+      var row = document.querySelector('.row[data-k="' + next + '"]');
+      if (row) { row.scrollIntoView({ block: 'center' }); flash(row); }
+    });
+
+    document.getElementById('syncBtn').addEventListener('click', openSync);
+
+    document.getElementById('clearBtn').addEventListener('click', function () {
+      if (!confirm('Clear all read/reading/skip marks? Reviews and bookmarks are kept.')) return;
+      state.progress = {};
+      saveProgress();
+      document.querySelectorAll('.row:not(.gap)').forEach(function (r) {
+        r.dataset.s = 'unread';
+        r.querySelector('.mark').textContent = MARKS[view.mark].unread;
+      });
+      paintProgress(); tallyEras(); applyFilters();
+    });
+
+    document.getElementById('jumpBtn').addEventListener('click', function () {
+      var rows = document.querySelectorAll('.row:not(.gap):not([hidden])');
+      for (var i = 0; i < rows.length; i++) {
+        if (rows[i].dataset.s === 'unread') { rows[i].scrollIntoView({ block: 'center' }); flash(rows[i]); return; }
+      }
+      alert('Nothing unread in the current view.');
+    });
+  }
+
+  function flash(row) {
+    row.style.transition = 'outline-color .8s ease';
+    row.style.outline = '2px solid var(--action)';
+    setTimeout(function () { row.style.outlineColor = 'transparent'; }, 60);
+    setTimeout(function () { row.style.outline = ''; row.style.transition = ''; }, 1000);
+  }
+
+  function paintPresets() {
+    var host = document.getElementById('presetRow');
+    host.textContent = '';
+    view.presets.forEach(function (p, i) {
+      var b = el('button', 'chip', p.n);
+      b.type = 'button';
+      b.addEventListener('click', function () {
+        state.filters = Object.assign(state.filters, JSON.parse(JSON.stringify(p.f)));
+        saveFilters(); syncAllChips();
+        document.getElementById('search').value = state.filters.q || '';
+        applyFilters();
+      });
+      var x = el('button', 'linkbtn', '\u00D7');
+      x.type = 'button';
+      x.setAttribute('aria-label', 'Delete preset ' + p.n);
+      x.addEventListener('click', function () { view.presets.splice(i, 1); saveView(); paintPresets(); });
+      host.appendChild(b); host.appendChild(x);
+    });
+    if (!view.presets.length) host.appendChild(el('span', 'pace', 'none saved'));
+  }
+
+  function repaintMarks() {
+    var g = MARKS[view.mark];
+    document.querySelectorAll('.row:not(.gap)').forEach(function (r) {
+      r.querySelector('.mark').textContent = g[r.dataset.s || 'unread'];
+    });
+  }
+
+  /* ---------- tabs ---------- */
+  var PANES = ['app', 'paneReading', 'paneReviews', 'panel'];
+  function switchTab(name) {
+    if (PANES.indexOf(name) === -1) name = 'app';
+    PANES.forEach(function (p) {
+      var n = document.getElementById(p);
+      if (n) n.hidden = (p !== name);
+    });
+    document.querySelectorAll('#tabs .tab').forEach(function (t) {
+      t.setAttribute('aria-selected', t.dataset.pane === name ? 'true' : 'false');
+    });
+    // filters and jump only make sense against the checklist
+    var fb = document.getElementById('filterBtn'), jb = document.getElementById('jumpBtn');
+    var onList = (name === 'app');
+    fb.hidden = !onList; jb.hidden = !onList;
+    var fsec2 = document.getElementById('filters');
+    if (isTabbed()) fsec2.hidden = !onList;
+    else if (!onList) { fsec2.hidden = true; fb.setAttribute('aria-expanded', 'false'); }
+    if (name === 'panel') paintPace();
+    if (name === 'paneReading') renderReading();
+    if (name === 'paneReviews') renderReviews();
+    state.settings.tab = name; save(K.settings, state.settings);
+    window.scrollTo(0, 0);
+  }
+
+  function issueByKey(k) {
+    for (var i = 0; i < D.issues.length; i++) if (D.issues[i][0] === k) return D.issues[i];
+    return null;
+  }
+  function jumpToIssue(k) {
+    switchTab('app');
+    setTimeout(function () {
+      var n = document.querySelector('[data-k="' + k + '"]');
+      if (n) { n.scrollIntoView({ block: 'center' }); n.classList.add('flash');
+               setTimeout(function () { n.classList.remove('flash'); }, 1400); }
+      else { toast('That issue is hidden by the current filters.'); }
+    }, 60);
+  }
+  function miniRow(it, extra) {
+    var b = el('button', 'mini-row');
+    b.type = 'button';
+    b.appendChild(el('span', 'mr-t', it[1]));
+    var arc = D.arcs[it[2]];
+    b.appendChild(el('span', 'mr-a', arc ? arc.n : ''));
+    if (extra) b.appendChild(extra);
+    b.addEventListener('click', function () { jumpToIssue(it[0]); });
+    return b;
+  }
+  function paneEmpty(pane, msg) {
+    pane.appendChild(el('p', 'pane-empty', msg));
+  }
+
+  function renderReviews() {
+    var pane = document.getElementById('paneReviews');
+    pane.textContent = '';
+    var keys = Object.keys(reviews).map(Number).sort(function (a, b) { return a - b; });
+    pane.appendChild(el('h2', 'pane-h', 'Reviews' + (keys.length ? ' \u00b7 ' + keys.length : '')));
+    if (!keys.length) {
+      paneEmpty(pane, 'No reviews yet. Tap \u2605 on any issue to rate it.');
+      return;
+    }
+    keys.forEach(function (k) {
+      var it = issueByKey(k); if (!it) return;
+      var rv = reviews[k];
+      var wrap = el('div', 'rev-item');
+      var stars = el('span', 'mr-s', rv.r ? '\u2605'.repeat(rv.r) + '\u2606'.repeat(5 - rv.r) : '');
+      wrap.appendChild(miniRow(it, stars));
+      if (rv.t) wrap.appendChild(el('p', 'rev-t', rv.t));
+      pane.appendChild(wrap);
+    });
+  }
+
+  /* ---------- reviews + bookmarks ---------- */
+  function reviewEditor(row, it) {
+    if (row._rev) { row._rev.remove(); row._rev = null; return; }
+    var cur = reviews[it[0]] || { r: 0, t: '' };
+    var box = el('div', 'review');
+    var stars = el('div', 'stars');
+    for (var i = 1; i <= 5; i++) (function (n) {
+      var b = el('button', null, '\u2605');
+      b.type = 'button';
+      b.setAttribute('aria-label', n + ' star' + (n > 1 ? 's' : ''));
+      b.setAttribute('aria-pressed', n <= cur.r ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        cur.r = (cur.r === n) ? 0 : n;
+        stars.querySelectorAll('button').forEach(function (x, j) {
+          x.setAttribute('aria-pressed', (j + 1) <= cur.r ? 'true' : 'false');
+        });
+        commit();
+      });
+      stars.appendChild(b);
+    })(i);
+    var ta = el('textarea');
+    ta.value = cur.t || '';
+    ta.placeholder = 'Notes on ' + it[1];
+    var deb;
+    ta.addEventListener('input', function () {
+      clearTimeout(deb);
+      deb = setTimeout(function () { cur.t = ta.value; commit(); }, 300);
+    });
+    function commit() {
+      if (!cur.r && !cur.t) delete reviews[it[0]]; else reviews[it[0]] = cur;
+      save(K3, reviews);
+      row.classList.toggle('reviewed', !!reviews[it[0]]);
+    }
+    box.appendChild(stars); box.appendChild(ta);
+    row.after(box); row._rev = box;
+    ta.focus();
+  }
+
+
+  /* ---------- QR sync ---------- */
+  var CANON = null;
+  function canon() {
+    if (!CANON) CANON = D.issues.slice().sort(function (a, b) { return a[0] - b[0]; });
+    return CANON;
+  }
+  function dataVersion() {
+    var c = canon();
+    return c.length + '-' + c[0][0] + '-' + c[c.length - 1][0];
+  }
+  var SBIT = { read: 1, reading: 2, skip: 3 };
+  var SNAME = { 1: 'read', 2: 'reading', 3: 'skip' };
+
+  function packProgress() {
+    var c = canon(), bytes = new Uint8Array(Math.ceil(c.length * 2 / 8));
+    c.forEach(function (it, i) {
+      var v = (it[6] & INERT) ? 0 : (SBIT[state.progress[it[0]]] || 0);
+      if (!v) return;
+      var bit = i * 2, idx = bit >> 3, off = 6 - (bit & 7);
+      bytes[idx] |= v << off;
+    });
+    var bin = '';
+    for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin);
+  }
+  function unpackProgress(b64) {
+    var bin = atob(b64), c = canon(), out = {};
+    c.forEach(function (it, i) {
+      var bit = i * 2, idx = bit >> 3, off = 6 - (bit & 7);
+      var v = (bin.charCodeAt(idx) >> off) & 3;
+      if (v) out[it[0]] = SNAME[v];
+    });
+    return out;
+  }
+  function makePayload() {
+    var body = { v: 1, d: dataVersion(), p: packProgress(), b: bookmarks,
+                 s: state.settings, f: state.filters, r: reviews };
+    return QRTAG + btoa(unescape(encodeURIComponent(JSON.stringify(body))));
+  }
+  function readPayload(txt) {
+    txt = (txt || '').trim();
+    if (txt.indexOf(QRTAG) !== 0) throw new Error('That sync code is from a different tracker.');
+    var body = JSON.parse(decodeURIComponent(escape(atob(txt.slice(6)))));
+    if (body.d !== dataVersion()) {
+      throw new Error('That code was made from a different version of the checklist, so the ' +
+        'positions would not line up. Re-export from the other device after updating it.');
+    }
+    return body;
+  }
+
+  function openSync() {
+    var box = document.getElementById('syncBox');
+    if (!box.hidden) { box.hidden = true; return; }
+    box.hidden = false; box.textContent = '';
+    var code = makePayload();
+
+    var qrWrap = el('div');
+    var fits = false;
+    try {
+      var q = qrcode(0, 'L');
+      q.addData(code);
+      q.make();
+      qrWrap.innerHTML = q.createSvgTag({ scalable: true });
+      fits = true;
+    } catch (e) { fits = false; }
+    if (fits) {
+      box.appendChild(qrWrap);
+      box.appendChild(el('p', 'pace', 'Scan on the other device, or copy the code below. ' +
+        code.length.toLocaleString() + ' characters.'));
+    } else {
+      box.appendChild(el('p', 'warn', 'Too much data for a QR code \u2014 mostly review text. ' +
+        'Copy the code below and paste it on the other device. ' + code.length.toLocaleString() + ' characters.'));
+    }
+
+    var out = el('textarea');
+    out.value = code; out.readOnly = true;
+    out.setAttribute('aria-label', 'Your sync code');
+    box.appendChild(out);
+    var copy = el('button', 'chip', 'copy code');
+    copy.type = 'button';
+    copy.addEventListener('click', function () {
+      out.select();
+      if (navigator.clipboard) navigator.clipboard.writeText(code).then(function () { toast('Copied.'); });
+      else { document.execCommand('copy'); toast('Copied.'); }
+    });
+    box.appendChild(copy);
+
+    box.appendChild(el('p', 'pace', 'To bring data in, paste a code here:'));
+    var inp = el('textarea');
+    inp.placeholder = 'SPDY1:\u2026';
+    inp.setAttribute('aria-label', 'Paste a sync code');
+    box.appendChild(inp);
+    var imp = el('button', 'chip', 'import');
+    imp.type = 'button';
+    imp.addEventListener('click', function () {
+      var body;
+      try { body = readPayload(inp.value); }
+      catch (e) { toast(e.message); return; }
+      if (!confirm('Replace this device\u2019s progress, reviews and settings with the pasted data?')) return;
+      state.progress = unpackProgress(body.p);
+      bookmarks = body.b || [];
+      reviews = body.r || {};
+      state.settings = Object.assign(state.settings, body.s || {});
+      state.filters = Object.assign(state.filters, body.f || {});
+      view = Object.assign(view, state.settings.view || {});
+      saveProgress(); save(K3, reviews); save(K.settings, state.settings); saveFilters();
+      document.documentElement.dataset.theme = state.settings.theme;
+      document.documentElement.dataset.erascheme = state.settings.eraScheme;
+      applyView(); render(); syncAllChips(); applyFilters();
+      box.hidden = true;
+      toast('Imported.');
+    });
+    box.appendChild(imp);
+  }
+
+  /* ---------- theme ---------- */
+  document.getElementById('themeBtn').addEventListener('click', function () {
+    var next = state.settings.theme === 'default' ? 'newsprint' : 'default';
+    state.settings.theme = next;
+    document.documentElement.dataset.theme = next;
+    document.querySelector('meta[name=theme-color]').content =
+      next === 'newsprint' ? '#322A21' : ((D.franchise && D.franchise.theme) || '#1959A7');
+    save(K.settings, state.settings);
+  });
+
+  /* ---------- boot ---------- */
+  Promise.all([load(K.progress, {}), load(K.settings, state.settings), load(K2, state.filters), load(K3, {})])
+    .then(function (r) {
+      var pr = r[0] || {};
+      if (pr && pr.p) { state.progress = pr.p; bookmarks = pr.b || []; }
+      else { state.progress = pr; }
+      // one-time: rows re-keyed since the last deploy would orphan their marks
+      if (D.keymap && !(r[1] || {}).keymapped) {
+        var mv = 0;
+        Object.keys(D.keymap).forEach(function (oldK) {
+          var newK = D.keymap[oldK];
+          if (state.progress[oldK] !== undefined && state.progress[newK] === undefined) {
+            state.progress[newK] = state.progress[oldK];
+            delete state.progress[oldK];
+            mv++;
+          }
+        });
+        state.settings.keymapped = true;
+        save(K.settings, state.settings);
+        if (mv) { save(K.progress, { p: state.progress, b: bookmarks });
+                  setTimeout(function () { toast(mv + ' marks moved to their new positions.'); }, 1200); }
+      }
+      var savedSettings = r[1] || {};
+      state.settings = Object.assign(state.settings, savedSettings);
+      // layout vocabulary changed: 'classic' used to mean the topbar+dropdown
+      // shell, which is now 'compact'; 'classic' is the Pull List skin.
+      // Test the RAW saved object — the defaults already carry lv:2, so the
+      // merged value would always look migrated.
+      if (savedSettings.lv !== 2) {
+        if (state.settings.layout === 'classic') state.settings.layout = 'compact';
+        state.settings.lv = 2;
+        save(K.settings, state.settings);
+      }
+      var savedF = r[2] || {};
+      var sv = (typeof savedF.sv === 'number') ? savedF.sv
+             : (savedF.strands != null ? 15 : D.strands.length);
+      state.filters = Object.assign(state.filters, savedF);
+      if (sv < D.strands.length) {
+        // strand roster grew: new strands default ON, and saved era/collapse
+        // indices refer to the old era roster so they are no longer meaningful
+        for (var si = sv; si < D.strands.length; si++) state.filters.strands |= (1 << si);
+        state.filters.sv = D.strands.length;
+        state.filters.era = null;
+        state.settings.collapsed = [];
+        saveFilters(); save(K.settings, state.settings);
+      }
+      reviews = r[3] || {};
+      view = Object.assign(view, state.settings.view || {});
+      applyView();
+      document.documentElement.dataset.theme = state.settings.theme;
+      document.documentElement.dataset.erascheme = state.settings.eraScheme;
+      buildFilterUI();
+      buildSettingsUI();
+      render();
+      wireRowActions();
+      applyFilters();
+      applyLayout();
+    });
+
+  /* ---------- toast ---------- */
+  var toastT;
+  function toast(msg, actionLabel, onAction) {
+    var t = document.getElementById('toast'), a = document.getElementById('toastAct');
+    document.getElementById('toastMsg').textContent = msg;
+    a.hidden = !actionLabel;
+    if (actionLabel) { a.textContent = actionLabel; a.onclick = onAction; }
+    t.hidden = false;
+    clearTimeout(toastT);
+    if (!actionLabel) toastT = setTimeout(function () { t.hidden = true; }, 3200);
+  }
+
+  /* ---------- offline + install ---------- */
+  function netState() {
+    document.body.classList.toggle('offline', !navigator.onLine);
+  }
+  window.addEventListener('online', function () { netState(); toast('Back online.'); });
+  window.addEventListener('offline', function () { netState(); toast('Offline \u2014 everything still works.'); });
+  netState();
+
+  var deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+    toast('Install ' + ((D.franchise && D.franchise.wordmark) || 'this tracker') + ' for offline reading?', 'Install', function () {
+      document.getElementById('toast').hidden = true;
+      deferredPrompt.prompt();
+      deferredPrompt = null;
+    });
+  });
+  window.addEventListener('appinstalled', function () { toast('Installed.'); });
+
+  /* ---------- service worker + update flow ---------- */
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('./sw.js', { scope: './' }).then(function (reg) {
+        reg.addEventListener('updatefound', function () {
+          var sw = reg.installing;
+          if (!sw) return;
+          sw.addEventListener('statechange', function () {
+            if (sw.state === 'installed' && navigator.serviceWorker.controller) {
+              toast('A new version is ready.', 'Reload', function () {
+                sw.postMessage({ type: 'SKIP_WAITING' });
+                location.reload();
+              });
+            }
+          });
+        });
+      }).catch(function () {});
+    });
+  }
+})();
+</script>
+</body>
+</html>

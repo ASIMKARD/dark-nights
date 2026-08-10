@@ -1,0 +1,587 @@
+@font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/anton-400-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/anton-400-latin.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/ibm-plex-mono-400-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/ibm-plex-mono-400-latin.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/ibm-plex-mono-500-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/ibm-plex-mono-500-latin.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/ibm-plex-sans-400-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/ibm-plex-sans-400-latin.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/ibm-plex-sans-500-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/ibm-plex-sans-500-latin.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/ibm-plex-sans-600-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/ibm-plex-sans-600-latin.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:var(--fs);line-height:1.45;
+ -webkit-font-smoothing:antialiased}
+:root{
+ --fs:15px; --dens:9px; --radius:6px;
+ --mark:'IBM Plex Mono',ui-monospace,monospace;
+
+ --bg:#0B0A0F;--surface:#16131C;--ink:#F2E9E4;--ink-soft:#A295A6;
+ --accent:#C8102E;--action:#D4A21A;--rule:#2C2536;
+ --gap-bg:#EFEFEF;--gap-ink:#6B6B6B;--e0-t:#FEF4F3;--e0-a:#B58982;--e0-d:#684F4B;--e1-t:#FEF3F2;--e1-a:#B7867E;--e1-d:#684D48;--e2-t:#FEF2F0;--e2-a:#B8837B;--e2-d:#684A45;--e3-t:#FEF1EF;--e3-a:#B98077;--e3-d:#694843;--e4-t:#FEF0EE;--e4-a:#8196B1;--e4-d:#48576A;--e5-t:#FEEFED;--e5-a:#BA7D73;--e5-d:#694640;--e6-t:#FEEEEB;--e6-a:#7D94B3;--e6-d:#45566B;--e7-t:#FEEDEA;--e7-a:#7A93B5;--e7-d:#43546C;--e8-t:#FEECE9;--e8-a:#BC7970;--e8-d:#69433E;--e9-t:#FEEAE8;--e9-a:#BD766C;--e9-d:#69413B;--e10-t:#FEE9E6;--e10-a:#BE7268;--e10-d:#693E39;--e11-t:#FEE8E5;--e11-a:#7792B6;--e11-d:#40536D;--e12-t:#FEE7E4;--e12-a:#7490B8;--e12-d:#3D516E;--e13-t:#FEE6E3;--e13-a:#718FBA;--e13-d:#3B506F;--e14-t:#FEE5E1;--e14-a:#6E8DBC;--e14-d:#384F70;--e15-t:#FEE4E0;--e15-a:#C06F64;--e15-d:#693C36;--e16-t:#FEE2DF;--e16-a:#6B8BBE;--e16-d:#364D71;--e17-t:#FEE1DD;--e17-a:#C16B60;--e17-d:#693A34;--e18-t:#FEE0DC;--e18-a:#678ABF;--e18-d:#334B72;--e19-t:#FEDFDB;--e19-a:#C3675C;--e19-d:#693732;--e20-t:#FEDEDA;--e20-a:#6488C1;--e20-d:#314A73;--e21-t:#FEDDD8;--e21-a:#6186C3;--e21-d:#2E4873;--e22-t:#FEDBD7;--e22-a:#5D84C5;--e22-d:#2C4774;--e23-t:#FEDAD6;--e23-a:#C46358;--e23-d:#69352F;--e24-t:#FED9D4;--e24-a:#5A82C7;--e24-d:#294575;--e25-t:#FED8D3;--e25-a:#C65F54;--e25-d:#69332D;--e26-t:#FED6D2;--e26-a:#5780C9;--e26-d:#274375;--e27-t:#FFD5D0;--e27-a:#537ECB;--e27-d:#254276;--e28-t:#FFD4CF;--e28-a:#507CCD;--e28-d:#234076;--e29-t:#FFD3CE;--e29-a:#4C79CF;--e29-d:#203E77;--e30-t:#FFD2CC;--e30-a:#C85B50;--e30-d:#69312B;--e31-t:#FFD0CB;--e31-a:#4977D1;--e31-d:#1E3C77;--e32-t:#FFCFCA;--e32-a:#CA574C;--e32-d:#692E29;--e33-t:#FFCEC8;--e33-a:#CB5348;--e33-d:#682C27;--e34-t:#FFCDC7;--e34-a:#4575D3;--e34-d:#1C3B78}
+:root[data-erascheme="mono"]{--e0-t:#FEF4F3;--e0-a:#B58982;--e0-d:#684F4B;--e1-t:#FEF3F2;--e1-a:#B7867E;--e1-d:#684D48;--e2-t:#FEF2F0;--e2-a:#B8837B;--e2-d:#684A45;--e3-t:#FEF1EF;--e3-a:#B98077;--e3-d:#694843;--e4-t:#FEF0EE;--e4-a:#B7847B;--e4-d:#684B46;--e5-t:#FEEFED;--e5-a:#BA7D73;--e5-d:#694640;--e6-t:#FEEEEB;--e6-a:#B98178;--e6-d:#684944;--e7-t:#FEEDEA;--e7-a:#B98077;--e7-d:#694843;--e8-t:#FEECE9;--e8-a:#BC7970;--e8-d:#69433E;--e9-t:#FEEAE8;--e9-a:#BD766C;--e9-d:#69413B;--e10-t:#FEE9E6;--e10-a:#BE7268;--e10-d:#693E39;--e11-t:#FEE8E5;--e11-a:#BB7A70;--e11-d:#69443E;--e12-t:#FEE7E4;--e12-a:#BC786F;--e12-d:#69423D;--e13-t:#FEE6E3;--e13-a:#BD776D;--e13-d:#69413C;--e14-t:#FEE5E1;--e14-a:#BD756B;--e14-d:#69403B;--e15-t:#FEE4E0;--e15-a:#C06F64;--e15-d:#693C36;--e16-t:#FEE2DF;--e16-a:#BE7268;--e16-d:#693E38;--e17-t:#FEE1DD;--e17-a:#C16B60;--e17-d:#693A34;--e18-t:#FEE0DC;--e18-a:#C06F64;--e18-d:#693C36;--e19-t:#FEDFDB;--e19-a:#C3675C;--e19-d:#693732;--e20-t:#FEDEDA;--e20-a:#C16C61;--e20-d:#693A34;--e21-t:#FEDDD8;--e21-a:#C26A5F;--e21-d:#693933;--e22-t:#FEDBD7;--e22-a:#C2685E;--e22-d:#693832;--e23-t:#FEDAD6;--e23-a:#C46358;--e23-d:#69352F;--e24-t:#FED9D4;--e24-a:#C4655A;--e24-d:#693630;--e25-t:#FED8D3;--e25-a:#C65F54;--e25-d:#69332D;--e26-t:#FED6D2;--e26-a:#C56257;--e26-d:#69342E;--e27-t:#FFD5D0;--e27-a:#C66055;--e27-d:#69332D;--e28-t:#FFD4CF;--e28-a:#C75E53;--e28-d:#69322C;--e29-t:#FFD3CE;--e29-a:#C75C51;--e29-d:#69312B;--e30-t:#FFD2CC;--e30-a:#C85B50;--e30-d:#69312B;--e31-t:#FFD0CB;--e31-a:#C9594E;--e31-d:#692F29;--e32-t:#FFCFCA;--e32-a:#CA574C;--e32-d:#692E29;--e33-t:#FFCEC8;--e33-a:#CB5348;--e33-d:#682C27;--e34-t:#FFCDC7;--e34-a:#CB5348;--e34-d:#682C27}
+:root[data-theme="newsprint"]{--e0-t:#FFE9CF;--e0-a:#CC7A20;--e0-d:#774200;--e1-t:#FFE6C6;--e1-a:#BD7C00;--e1-d:#6C4200;--e2-t:#FEEFCB;--e2-a:#B48A00;--e2-d:#684D00;--e3-t:#F2ECC6;--e3-a:#A08C00;--e3-d:#5A4D00;--e4-t:#F0F4CE;--e4-a:#939814;--e4-d:#535600;--e5-t:#E1F2CE;--e5-a:#739B32;--e5-d:#3C560F;--e6-t:#DEF9DA;--e6-a:#5AA652;--e6-d:#2D5E28;--e7-t:#D0F5DE;--e7-a:#21A46A;--e7-d:#005C37;--e8-t:#CEFCEF;--e8-a:#00AB8D;--e8-d:#00624F;--e9-t:#C5F6F5;--e9-a:#00A4A7;--e9-d:#005C5E;--e10-t:#CBFAFF;--e10-a:#00A5C4;--e10-d:#005E72;--e11-t:#CAF1FF;--e11-a:#0098D1;--e11-d:#005479;--e12-t:#D9F3FF;--e12-a:#4994E3;--e12-d:#225386;--e13-t:#E0E9FF;--e13-a:#7283E0;--e13-d:#3C4682;--e14-t:#F3EAFF;--e14-a:#997DDC;--e14-d:#574481;--e15-t:#FAE0FF;--e15-a:#B06DC0;--e15-d:#64386E;--e16-t:#FFE1DF;--e16-a:#D56666;--e16-d:#7C3435;--e17-t:#FFDBE1;--e17-a:#CD6078;--e17-d:#752F3F;--e18-t:#FFE1F6;--e18-a:#C468A8;--e18-d:#71365F;--e19-t:#EBE1FF;--e19-a:#9673D0;--e19-d:#533B77;--e20-t:#CCF4FF;--e20-a:#009ECC;--e20-d:#005876;--e21-t:#C4F1F3;--e21-a:#00A0AA;--e21-d:#00595F;--e22-t:#DFECFF;--e22-a:#6988E2;--e22-d:#374A85;--e23-t:#FFDFCC;--e23-a:#C96C2B;--e23-d:#733707;--e24-t:#F5EDCB;--e24-a:#A78C00;--e24-d:#5F4D00;--e25-t:#FFDED1;--e25-a:#CD6742;--e25-d:#75331B;
+ --bg:#F2ECE0;--surface:#FBF7EF;--ink:#322A21;--ink-soft:#665C50;
+ --accent:#B72121;--action:#105996;--rule:#D8CFC6;
+ --gap-bg:#E8E2D6;--gap-ink:#6E665C;
+}
+.era[data-e="0"]{--tint:var(--e0-t);--acc:var(--e0-a);--deep:var(--e0-d)}
+.era[data-e="1"]{--tint:var(--e1-t);--acc:var(--e1-a);--deep:var(--e1-d)}
+.era[data-e="2"]{--tint:var(--e2-t);--acc:var(--e2-a);--deep:var(--e2-d)}
+.era[data-e="3"]{--tint:var(--e3-t);--acc:var(--e3-a);--deep:var(--e3-d)}
+.era[data-e="4"]{--tint:var(--e4-t);--acc:var(--e4-a);--deep:var(--e4-d)}
+.era[data-e="5"]{--tint:var(--e5-t);--acc:var(--e5-a);--deep:var(--e5-d)}
+.era[data-e="6"]{--tint:var(--e6-t);--acc:var(--e6-a);--deep:var(--e6-d)}
+.era[data-e="7"]{--tint:var(--e7-t);--acc:var(--e7-a);--deep:var(--e7-d)}
+.era[data-e="8"]{--tint:var(--e8-t);--acc:var(--e8-a);--deep:var(--e8-d)}
+.era[data-e="9"]{--tint:var(--e9-t);--acc:var(--e9-a);--deep:var(--e9-d)}
+.era[data-e="10"]{--tint:var(--e10-t);--acc:var(--e10-a);--deep:var(--e10-d)}
+.era[data-e="11"]{--tint:var(--e11-t);--acc:var(--e11-a);--deep:var(--e11-d)}
+.era[data-e="12"]{--tint:var(--e12-t);--acc:var(--e12-a);--deep:var(--e12-d)}
+.era[data-e="13"]{--tint:var(--e13-t);--acc:var(--e13-a);--deep:var(--e13-d)}
+.era[data-e="14"]{--tint:var(--e14-t);--acc:var(--e14-a);--deep:var(--e14-d)}
+.era[data-e="15"]{--tint:var(--e15-t);--acc:var(--e15-a);--deep:var(--e15-d)}
+.era[data-e="16"]{--tint:var(--e16-t);--acc:var(--e16-a);--deep:var(--e16-d)}
+.era[data-e="17"]{--tint:var(--e17-t);--acc:var(--e17-a);--deep:var(--e17-d)}
+.era[data-e="18"]{--tint:var(--e18-t);--acc:var(--e18-a);--deep:var(--e18-d)}
+.era[data-e="19"]{--tint:var(--e19-t);--acc:var(--e19-a);--deep:var(--e19-d)}
+.era[data-e="20"]{--tint:var(--e20-t);--acc:var(--e20-a);--deep:var(--e20-d)}
+.era[data-e="21"]{--tint:var(--e21-t);--acc:var(--e21-a);--deep:var(--e21-d)}
+.era[data-e="22"]{--tint:var(--e22-t);--acc:var(--e22-a);--deep:var(--e22-d)}
+.era[data-e="23"]{--tint:var(--e23-t);--acc:var(--e23-a);--deep:var(--e23-d)}
+.era[data-e="24"]{--tint:var(--e24-t);--acc:var(--e24-a);--deep:var(--e24-d)}
+.era[data-e="25"]{--tint:var(--e25-t);--acc:var(--e25-a);--deep:var(--e25-d)}
+/* ---------- chrome ---------- */
+.topbar{position:sticky;top:0;z-index:20;background:var(--action);color:#fff;
+ display:flex;align-items:center;gap:12px;padding:10px 14px;box-shadow:0 1px 0 rgba(0,0,0,.12)}
+:root[data-theme="newsprint"] .topbar{background:var(--ink);color:var(--bg)}
+.wordmark{font-family:'Anton',Impact,sans-serif;font-size:20px;letter-spacing:.03em;
+ text-transform:uppercase;white-space:nowrap}
+.count{font-family:var(--mark);font-size:12px;opacity:.9;white-space:nowrap}
+.pbar{flex:1;min-width:60px;height:6px;border-radius:3px;background:rgba(255,255,255,.28);
+ position:relative;overflow:hidden}
+:root[data-theme="newsprint"] .pbar{background:rgba(242,236,224,.25)}
+.pbar>i{position:absolute;inset:0 auto 0 0;background:var(--accent);border-radius:3px;
+ transition:width .25s ease}
+@media (prefers-reduced-motion:reduce){.pbar>i{transition:none}}
+.iconbtn{background:none;border:0;color:inherit;font:inherit;cursor:pointer;padding:6px;
+ border-radius:var(--radius);line-height:1;font-size:16px}
+.iconbtn:hover{background:rgba(255,255,255,.16)}
+main{max-width:960px;margin:0 auto;padding:0 0 40vh}
+/* ---------- era ---------- */
+.era-head{position:sticky;top:calc(44px + env(safe-area-inset-top,0px));z-index:10;display:flex;align-items:center;gap:10px;
+ padding:8px 14px;background:var(--tint);color:var(--deep);border-left:4px solid var(--acc);
+ border-top:1px solid var(--rule);cursor:pointer;width:100%;text-align:left;font:inherit}
+.era-head h2{margin:0;font-size:12.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase}
+.era-head .n{font-family:var(--mark);font-size:11.5px;opacity:.75;margin-left:auto;white-space:nowrap}
+.era-head .chev{transition:transform .18s ease;font-size:11px;opacity:.7}
+.era[aria-expanded="false"] .chev{transform:rotate(-90deg)}
+.era-intro{background:var(--tint);color:var(--deep);padding:2px 18px 12px;font-size:13.5px;
+ border-left:4px solid var(--acc);font-style:italic}
+/* ---------- arc ---------- */
+.arc-head{background:var(--tint);border-left:4px solid var(--acc);padding:9px 14px 4px;
+ display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.arc-head h3{margin:0;font-size:13.5px;font-weight:600;color:var(--deep)}
+.arc-meta{font-family:var(--mark);font-size:11px;color:var(--ink-soft)}
+.blurb{background:var(--tint);border-left:4px solid var(--acc);padding:0 14px 8px;
+ font-size:13px;color:var(--ink);opacity:.85;max-width:74ch}
+/* ---------- rows ---------- */
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:var(--dens) 14px;background:var(--tint);
+ border-left:4px solid var(--acc);border-top:1px solid rgba(0,0,0,.055);position:relative}
+.mark{font-family:var(--mark);font-size:16px;width:26px;min-height:26px;flex:none;display:grid;
+ place-items:center;background:none;border:0;cursor:pointer;color:var(--ink-soft);
+ border-radius:var(--radius);padding:0}
+.mark:hover{background:rgba(0,0,0,.06)}
+.row[data-s="read"] .mark{color:var(--accent)}
+.row[data-s="reading"] .mark{color:var(--action)}
+.row[data-s="skip"] .mark{color:var(--ink-soft);opacity:.55}
+.row[data-s="read"] .title,.row[data-s="skip"] .title{opacity:.55}
+.row[data-s="skip"] .title{text-decoration:line-through}
+.title{font-weight:500;flex:0 1 auto;min-width:0;overflow-wrap:anywhere}
+.arclab{font-size:12.5px;color:var(--ink-soft);flex:1;min-width:0;overflow:hidden;
+ text-overflow:ellipsis;white-space:nowrap}
+.badges{display:flex;gap:5px;align-items:center;flex:0 1 auto;flex-wrap:wrap;min-width:0}
+.b{font-family:var(--mark);font-size:10.5px;padding:1px 6px;border-radius:3px;white-space:nowrap;
+ border:1px solid transparent;background:none;cursor:default;color:var(--ink-soft)}
+.b.core{background:var(--accent);color:#fff;font-weight:500}
+.b.note{border-color:var(--acc);color:var(--deep);cursor:pointer}
+.b.mu{border-color:var(--rule);color:var(--action);text-decoration:none;background:var(--surface)}
+.b.mu:hover{border-color:var(--action)}
+.notepop{grid-column:1/-1;font-size:12.5px;color:var(--ink);background:var(--surface);
+ border-left:3px solid var(--acc);margin:6px 0 0 36px;padding:7px 10px;border-radius:var(--radius);
+ max-width:74ch}
+.row.gap{background:var(--gap-bg);color:var(--gap-ink);font-style:italic;font-size:13px;
+ border-left-color:transparent;cursor:default}
+.row.gap .mark{opacity:.35;cursor:default}
+.subnote{font-size:12px;color:var(--ink-soft);margin-left:auto;flex:0 1 auto;
+ min-width:0;overflow-wrap:anywhere}
+:where(a,button,[tabindex]):focus-visible{outline:2.5px solid var(--action);outline-offset:2px;
+ border-radius:var(--radius)}
+:root[data-theme="newsprint"] :where(a,button):focus-visible{outline-color:var(--accent)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:600px){
+ .arclab{display:none}
+ .wordmark{font-size:17px}
+ main{padding-bottom:50vh}
+}
+.cont{font-family:var(--mark);font-size:10px;letter-spacing:.08em;text-transform:lowercase;
+ opacity:.6;border:1px solid currentColor;border-radius:3px;padding:0 4px}
+/* ---------- filter bar ---------- */
+.filters{position:sticky;top:calc(44px + env(safe-area-inset-top,0px));z-index:15;background:var(--surface);border-bottom:1px solid var(--rule);
+ padding:8px 14px;display:grid;gap:8px}
+.filters[hidden]{display:none}
+.frow{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.flabel{font-family:var(--mark);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+ color:var(--ink-soft);flex:none;width:62px}
+.chip{font:inherit;font-size:12.5px;padding:3px 10px;border-radius:999px;border:1px solid var(--rule);
+ background:var(--surface);color:var(--ink-soft);cursor:pointer;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--action);border-color:var(--action);color:#fff}
+.chip.strand[aria-pressed="true"]{background:var(--accent);border-color:var(--accent)}
+.chip:hover{border-color:var(--action)}
+.search{flex:1;min-width:140px;font:inherit;font-size:13.5px;padding:5px 10px;border-radius:var(--radius);
+ border:1px solid var(--rule);background:var(--bg);color:var(--ink)}
+.search::placeholder{color:var(--ink-soft)}
+.linkbtn{background:none;border:0;font:inherit;font-size:12px;color:var(--action);cursor:pointer;
+ text-decoration:underline;padding:2px 4px}
+.tally{font-family:var(--mark);font-size:11.5px;color:var(--ink-soft);margin-left:auto}
+.empty{padding:30px 14px;color:var(--ink-soft);font-style:italic}
+.arc[hidden],.era[hidden],.row[hidden]{display:none}
+mark{background:var(--accent);color:#fff;border-radius:2px;padding:0 2px}
+/* ---------- settings ---------- */
+.panel{position:sticky;top:calc(44px + env(safe-area-inset-top,0px));z-index:16;background:var(--surface);border-bottom:1px solid var(--rule);
+ padding:10px 14px;display:grid;gap:9px;max-height:70vh;overflow:auto}
+.panel[hidden]{display:none}
+.seg{display:flex;gap:0;border:1px solid var(--rule);border-radius:var(--radius);overflow:hidden}
+.seg button{font:inherit;font-size:12.5px;padding:4px 11px;border:0;border-right:1px solid var(--rule);
+ background:var(--surface);color:var(--ink-soft);cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--action);color:#fff}
+.pace{font-family:var(--mark);font-size:12px;color:var(--ink-soft)}
+.pace b{color:var(--ink);font-weight:500}
+.presetRow{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.mini{position:sticky;top:calc(44px + env(safe-area-inset-top,0px));z-index:14;height:3px;background:var(--rule)}
+.mini>i{display:block;height:100%;background:var(--accent);transition:width .25s ease}
+@media (prefers-reduced-motion:reduce){.mini>i{transition:none}}
+/* row extras */
+.b.bm[aria-pressed="true"]{background:var(--action);color:#fff;border-color:var(--action)}
+.review{grid-column:1/-1;background:var(--surface);border-left:3px solid var(--acc);margin:6px 0 0 36px;
+ padding:8px 10px;border-radius:var(--radius);max-width:74ch;display:grid;gap:6px}
+.stars{display:flex;gap:3px}
+.stars button{background:none;border:0;font-size:17px;cursor:pointer;color:var(--ink-soft);padding:0 2px;line-height:1}
+.stars button[aria-pressed="true"]{color:var(--accent)}
+.review textarea{font:inherit;font-size:13px;border:1px solid var(--rule);border-radius:var(--radius);
+ padding:6px 8px;background:var(--bg);color:var(--ink);resize:vertical;min-height:52px}
+.reviewed .mark::after{content:'';position:absolute;width:5px;height:5px;border-radius:50%;
+ background:var(--accent);transform:translate(11px,-9px)}
+/* variants */
+:root[data-dys="1"] body,:root[data-dys="1"] .search,:root[data-dys="1"] textarea{
+ font-family:'Comic Sans MS','Trebuchet MS',Verdana,sans-serif;letter-spacing:.02em;word-spacing:.08em}
+:root[data-tap="1"] .mark{width:44px;min-height:44px}
+:root[data-tap="1"] .chip,:root[data-tap="1"] .seg button{padding-top:8px;padding-bottom:8px}
+:root[data-badges="0"] .badges{display:none}
+:root[data-table="1"] .blurb,:root[data-table="1"] .era-intro{display:none}
+:root[data-table="1"] .row{--dens:3px;font-size:13px}
+:root[data-table="1"] .arc-head{padding-top:5px;padding-bottom:2px}
+:root[data-table="1"] .arclab{display:inline;font-family:var(--mark);font-size:11px}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:40;background:var(--ink);
+ color:var(--bg);padding:9px 14px;border-radius:999px;font-size:13px;display:flex;gap:10px;align-items:center;
+ box-shadow:0 4px 14px rgba(0,0,0,.22);max-width:92vw}
+.toast button{font:inherit;font-size:12.5px;background:var(--accent);color:#fff;border:0;
+ border-radius:999px;padding:3px 11px;cursor:pointer}
+.toast[hidden]{display:none}
+.offline .topbar{filter:saturate(.6)}
+.offdot{width:7px;height:7px;border-radius:50%;background:#E0A21B;flex:none}
+.sync{display:grid;gap:8px;padding:10px 0}
+.sync svg{width:100%;max-width:280px;height:auto;background:#fff;padding:8px;border-radius:var(--radius)}
+.sync textarea{font-family:var(--mark);font-size:11px;min-height:70px;border:1px solid var(--rule);
+ border-radius:var(--radius);padding:6px 8px;background:var(--bg);color:var(--ink);resize:vertical}
+.sync .warn{font-size:12.5px;color:var(--accent)}
+.row.renum{background:var(--surface);color:var(--ink-soft);font-size:12.5px;border-left:4px solid var(--acc);
+ border-top:1px dashed var(--rule);cursor:default;font-style:normal}
+.row.renum .mark{opacity:.5;cursor:default;color:var(--acc)}
+.row.renum .title{font-weight:400;font-family:var(--mark);font-size:12px}
+
+/* ---------- mobile: stop the topbar overflowing the viewport ----------
+   .topbar is a non-wrapping flex row of nowrap items; on narrow screens its
+   intrinsic width exceeded the viewport, which made the whole page pan
+   sideways. Vertical padding stays at 10px so the bar remains 44px tall and
+   the sticky offsets below it (top:calc(44px + env(safe-area-inset-top,0px))) still line up.
+   overflow-x:clip on body is a guard against any other stray overflow —
+   deliberately clip, not hidden, because hidden would create a scroll
+   container and break every position:sticky header in the app. */
+html,body{overflow-x:hidden;overflow-x:clip;max-width:100%}
+@media (max-width:600px){
+  .topbar{gap:8px;padding:10px}
+  .topbar>*{min-width:0}
+  .wordmark{font-size:16px}
+  .pbar{min-width:34px}
+  .iconbtn{padding:6px 4px;font-size:15px}
+}
+@media (max-width:430px){
+  .topbar{gap:6px}
+  .wordmark{font-size:15px}
+  #count{display:none}          /* the % readout already carries progress */
+}
+
+
+/* ---------- standalone (added to home screen) ----------
+   apple-mobile-web-app-status-bar-style:black-translucent draws the page
+   under the status bar, so the topbar needs the safe-area inset added to
+   its padding, and every sticky offset below it has to follow. */
+.topbar{padding-top:calc(10px + env(safe-area-inset-top,0px))}
+body{padding-bottom:env(safe-area-inset-bottom,0px)}
+
+/* ---------- tabbed shell (opt-in: Settings > Layout > tabbed) ----------
+   Classic layout is unchanged and remains the default. In tabs mode the
+   settings panel stops being a sticky dropdown and becomes a tab pane, the
+   gear button is hidden, and every sticky offset gains the tab-bar height. */
+.tabs{position:sticky;top:calc(44px + env(safe-area-inset-top,0px));z-index:19;
+  display:flex;background:var(--surface);border-bottom:1px solid var(--rule)}
+.tabs[hidden]{display:none}
+.tab{flex:1;background:none;border:0;border-bottom:2px solid transparent;color:var(--ink-soft);
+  font:inherit;font-size:13px;padding:11px 4px;cursor:pointer;line-height:1;
+  white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+.tab[aria-selected="true"]{color:var(--action);border-bottom-color:var(--action);font-weight:600}
+:root[data-theme="newsprint"] .tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+
+:root[data-layout="tabs"] .era-head,
+:root[data-layout="tabs"] .filters,
+:root[data-layout="tabs"] .mini{top:calc(84px + env(safe-area-inset-top,0px))}
+:root[data-layout="tabs"] .panel{position:static;max-height:none;border-bottom:0}
+
+.pane{padding:12px 14px 40vh;max-width:960px;margin:0 auto}
+.pane[hidden]{display:none}
+.plist{margin:0 0 22px}
+.plist h2{margin:0 0 8px;font-size:12px;font-weight:600;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--ink-soft)}
+.pempty{margin:0;font-size:13px;color:var(--ink-soft);opacity:.8}
+.pitem{display:grid;gap:2px;width:100%;text-align:left;font:inherit;cursor:pointer;
+  background:var(--surface);border:0;border-top:1px solid var(--rule);padding:9px 2px}
+.pitem:hover{background:var(--tint)}
+.pt{font-size:14px;color:var(--ink)}
+.pa{font-size:12px;color:var(--ink-soft)}
+.pstars{font-size:12px;color:var(--accent);letter-spacing:.06em}
+.ptext{font-size:12.5px;color:var(--ink-soft);opacity:.9}
+
+/* ---------- Pull List header (tabs layout only) ----------
+   Replaces the sticky topbar in tabs mode. Everything here is block-level and
+   wraps, so unlike .topbar it cannot exceed the viewport at any width. */
+.phead{padding:calc(14px + env(safe-area-inset-top,0px)) 14px 10px;background:var(--tint);
+  border-bottom:1px solid var(--rule)}
+.phead[hidden]{display:none}
+.ptitle{margin:0;font-family:var(--display),system-ui,sans-serif;font-size:30px;line-height:1;
+  letter-spacing:.01em;text-transform:uppercase;color:var(--ink);overflow-wrap:anywhere}
+.psub{margin:5px 0 0;font-size:13px;color:var(--ink-soft);overflow-wrap:anywhere}
+.pmeta{margin:9px 0 0;font-family:var(--mark);font-size:13px;color:var(--ink-soft)}
+.pbar2{margin-top:10px;height:9px;border-radius:999px;background:var(--rule);overflow:hidden}
+.pbar2 i{display:block;height:100%;background:var(--action);transition:width .25s ease}
+.pstats{display:flex;justify-content:space-between;gap:10px;margin-top:6px;
+  font-family:var(--mark);font-size:12.5px;color:var(--ink-soft);flex-wrap:wrap}
+:root{--hud-h:30px}
+/* HUD: the progress readout pins with the tab bar instead of scrolling
+   half-under it, which is what made the top of the screen look clipped */
+:root[data-layout="tabs"] .pstats{position:sticky;top:0;z-index:21;margin:0;
+  padding:7px 14px;background:var(--tint);border-bottom:1px solid var(--rule)}
+:root[data-layout="tabs"] .tabs{top:var(--hud-h)}
+:root[data-layout="tabs"] .era-head,
+:root[data-layout="tabs"] .filters,
+:root[data-layout="tabs"] .mini{top:calc(var(--hud-h) + 40px)}
+
+/* ---------- Reading: focused stepper ---------- */
+.rdr{max-width:640px;margin:0 auto;padding:22px 16px;text-align:center}
+.rcount{margin:0 0 26px;font-family:var(--mark);font-size:13px;color:var(--ink-soft)}
+.rpillwrap{margin-bottom:14px}
+.rpill{display:inline-block;padding:5px 14px;border-radius:999px;color:#fff;
+  font-size:13px;font-weight:600}
+.rtitle{margin:0 0 6px;font-family:var(--display),system-ui,sans-serif;font-size:26px;
+  line-height:1.15;color:var(--ink);overflow-wrap:anywhere}
+.rmeta{margin:0;font-size:14px;color:var(--ink-soft);overflow-wrap:anywhere}
+.rnote{margin:14px 0 0;font-size:14.5px;font-style:italic;color:var(--ink-soft)}
+.rrule{border:0;border-top:1px dashed var(--rule);margin:22px 0}
+.rblurb{margin:0;font-size:15px;line-height:1.55;color:var(--ink)}
+.racts{display:flex;gap:12px;margin:32px 0 18px}
+.rbtn{flex:1;min-width:0;font:inherit;font-size:15px;font-weight:600;padding:15px 8px;
+  border-radius:var(--radius);cursor:pointer;overflow-wrap:anywhere}
+.rbtn.ghost{background:var(--surface);color:var(--ink);border:1.5px solid var(--ink)}
+.rbtn.solid{background:var(--ink);color:var(--surface);border:1.5px solid var(--ink)}
+.rnav{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.rlink{background:none;border:0;font:inherit;font-size:13.5px;color:var(--ink);
+  cursor:pointer;padding:6px 2px}
+.rlink:disabled{opacity:.35;cursor:default}
+
+/* ---------- hard guarantee: nothing may exceed the viewport ---------- */
+html{max-width:100%}
+img,svg,pre,table{max-width:100%}
+
+
+/* ---------- overflow guarantee ----------
+   The root cause of the iPhone side-scroll was .title{flex:none}: a flex item
+   that can neither shrink nor wrap forces its row as wide as its longest
+   string. Long issue titles overflow narrow screens without this. These rules make every
+   flex child shrinkable and let long strings break. */
+.row>*,.era-head>*,.arc-head>*,.frow>*,.pstats>*,.racts>*,.rnav>*{min-width:0}
+.title,.arclab,.rtitle,.rmeta,.ptitle,.psub{overflow-wrap:anywhere}
+.seg{flex-wrap:wrap}
+
+
+/* [hidden] is a UA rule (display:none) and loses to any author display rule,
+   so elements given display:flex must opt in explicitly or JS .hidden = true
+   silently does nothing. This is why the topbar stayed visible in tabs mode. */
+.topbar[hidden],.phead[hidden],.tabs[hidden],.pane[hidden],.panel[hidden],
+.filters[hidden],#strandRow,.period[hidden],.era[hidden],.arc[hidden],.row[hidden]{display:none !important}
+
+.era-head .n,.count{overflow:hidden;text-overflow:ellipsis}
+
+:root[data-layout="classic"] #panel{padding:0;max-width:none;margin:0}
+
+
+/* ---------- long-list performance ----------
+   4,683 rows plus ~5,000 sticky era/arc headers (the interleaved reading
+   order re-enters eras constantly, so a header is emitted at every
+   transition) meant the whole list was laid out and painted on every
+   frame. content-visibility:auto lets the engine skip everything
+   off-screen; contain-intrinsic-size(auto N) reserves an estimated height
+   and then remembers the real one, keeping the scrollbar stable. Browsers
+   without support simply ignore these lines. */
+.row,.arc-head,.era-head,.blurb{content-visibility:auto}
+.row{contain-intrinsic-size:auto 46px}
+.arc-head{contain-intrinsic-size:auto 42px}
+.era-head{contain-intrinsic-size:auto 46px}
+.blurb{contain-intrinsic-size:auto 96px}
+
+/* ---------- period bands (seven story-shift super-eras) ---------- */
+.period{border-bottom:2px solid var(--rule)}
+.period-head{display:flex;align-items:center;gap:10px;width:100%;text-align:left;
+  font:inherit;cursor:pointer;padding:13px 14px;background:var(--tint);border:0;
+  border-left:5px solid var(--action);position:sticky;top:0;z-index:12}
+:root[data-layout="tabs"] .period-head{top:calc(var(--hud-h) + 40px)}
+.period[aria-expanded="false"] .chev{transform:rotate(-90deg)}
+.ptext{display:grid;gap:2px;min-width:0;flex:1 1 auto}
+.pname{font-family:var(--display),system-ui,sans-serif;font-size:16px;letter-spacing:.02em;
+  text-transform:uppercase;color:var(--ink);overflow-wrap:anywhere;line-height:1.15}
+.pyears{font-family:var(--mark);font-size:11.5px;color:var(--ink-soft)}
+.period-head .n{font-family:var(--mark);font-size:11.5px;color:var(--ink-soft);
+  white-space:nowrap;flex:none}
+.period-body[hidden]{display:none}
+.period-intro{margin:0;padding:12px 14px;font-size:13.5px;line-height:1.5;
+  color:var(--ink-soft);font-style:italic;background:var(--surface)}
+/* era headers become second-tier inside a period */
+.period .era-head{padding-left:20px;font-size:12px}
+.period .era-head h2{font-size:11.5px;opacity:.9}
+:root[data-layout="tabs"] .period .era-head{top:calc(var(--hud-h) + 88px)}
+
+/* filters sit open on the Checklist in tabs mode (X-Men behaviour), so they
+   scroll with the list rather than pinning under the tab bar */
+:root[data-layout="tabs"] .filters{position:static;border-bottom:2px solid var(--rule)}
+:root[data-layout="tabs"] .filters .frow{align-items:flex-start}
+.filters .chip[data-kind="strand"]{font-size:11.5px}
+
+/* ================================================================
+   PULL LIST SKIN  (Settings > Layout > classic)
+   Recreates the X-Men app's look on the same markup: cream page,
+   Anton uppercase display, monospace metadata, black tab bar,
+   and big notched era banners. Palette is per-franchise — a
+   red-to-blue ramp across the eight periods instead of X-Men's
+   gold/crimson/purple. Everything is scoped to [data-skin="pull"],
+   so the compact and tabbed layouts are untouched.
+   ================================================================ */
+:root[data-skin="pull"]{
+  --surface:#EDE7DB; --tint:#E6DFD0; --ink:#191712; --ink-soft:#6B6459;
+  --rule:#CFC6B4; --action:#1E4C8A; --accent:#B3202E; --radius:8px;
+  --p0:#C0392B; --p1:#96302B; --p2:#2E2A36; --p3:#7A2E5C;
+  --p4:#1F4E79; --p5:#1959A7; --p6:#166B7A; --p7:#C81E2B;
+}
+:root[data-skin="pull"] body{background:var(--surface);color:var(--ink)}
+
+/* header block */
+:root[data-skin="pull"] .phead{background:var(--surface);border-bottom:0;padding-bottom:6px}
+:root[data-skin="pull"] .ptitle{font-size:34px;letter-spacing:.005em}
+:root[data-skin="pull"] .psub{font-size:13.5px}
+:root[data-skin="pull"] .pmeta{font-family:var(--mark);font-size:13px}
+:root[data-skin="pull"] .pbar2{height:11px;background:#D8D0BE}
+:root[data-skin="pull"] .pbar2 i{background:#B9B1A0}
+:root[data-skin="pull"] .pstats{font-family:var(--mark);font-size:13px}
+
+/* tab bar: black, uppercase, letter-spaced, blue active underline */
+:root[data-skin="pull"] .tabs{background:#141210;border-bottom:0}
+:root[data-skin="pull"] .tab{color:#CFC8BC;text-transform:uppercase;letter-spacing:.09em;
+  font-size:13px;font-weight:600;padding:15px 4px;border-bottom:3px solid transparent}
+:root[data-skin="pull"] .tab[aria-selected="true"]{color:#fff;border-bottom-color:var(--action)}
+
+/* filters: pill chips, dark when active */
+:root[data-skin="pull"] .filters{background:var(--surface);border-bottom:1px solid var(--rule)}
+:root[data-skin="pull"] .chip{border-radius:999px;border:1.5px solid var(--ink);
+  background:var(--surface);color:var(--ink);padding:9px 16px;font-size:14px}
+:root[data-skin="pull"] .chip[aria-pressed="true"]{background:#141210;color:#fff;border-color:#141210}
+:root[data-skin="pull"] .seg{border-radius:999px;border:1.5px solid var(--ink);overflow:hidden}
+:root[data-skin="pull"] .seg button{padding:9px 15px;font-size:14px;background:var(--surface);color:var(--ink)}
+:root[data-skin="pull"] .seg button[aria-pressed="true"]{background:#141210;color:#fff}
+:root[data-skin="pull"] .search{border-radius:999px;border:1.5px solid var(--rule);
+  background:#F3EEE4;padding:12px 16px;font-size:15px}
+:root[data-skin="pull"] .flabel{font-family:var(--mark);font-size:11.5px;
+  text-transform:uppercase;letter-spacing:.07em}
+
+/* period banners — the X-Men era cards */
+:root[data-skin="pull"] .period{border-bottom:0;margin:14px 12px 0}
+:root[data-skin="pull"] .period-head{border-left:0;border-radius:var(--radius) var(--radius) 0 0;
+  padding:16px 18px 14px;position:static;color:#fff;
+  clip-path:polygon(0 0,100% 0,100% 62%,calc(100% - 34px) 100%,0 100%)}
+:root[data-skin="pull"] .period-head .chev{color:rgba(255,255,255,.75)}
+:root[data-skin="pull"] .pname{color:#fff;font-size:22px;letter-spacing:.015em;line-height:1.05}
+:root[data-skin="pull"] .pyears{color:rgba(255,255,255,.82);font-size:13px}
+:root[data-skin="pull"] .period-head .n{color:rgba(255,255,255,.9);font-size:12.5px;align-self:flex-end}
+:root[data-skin="pull"] .period[data-p="0"] .period-head{background:var(--p0)}
+:root[data-skin="pull"] .period[data-p="1"] .period-head{background:var(--p1)}
+:root[data-skin="pull"] .period[data-p="2"] .period-head{background:var(--p2)}
+:root[data-skin="pull"] .period[data-p="3"] .period-head{background:var(--p3)}
+:root[data-skin="pull"] .period[data-p="4"] .period-head{background:var(--p4)}
+:root[data-skin="pull"] .period[data-p="5"] .period-head{background:var(--p5)}
+:root[data-skin="pull"] .period[data-p="6"] .period-head{background:var(--p6)}
+:root[data-skin="pull"] .period[data-p="7"] .period-head{background:var(--p7)}
+:root[data-skin="pull"] .period-intro{background:#F3EEE4;border-radius:0 0 var(--radius) var(--radius);
+  border:1px solid var(--rule);border-top:0}
+:root[data-skin="pull"] .period-body{background:transparent}
+
+/* second-tier era headers stay quiet inside a banner */
+:root[data-skin="pull"] .period .era-head{background:#F3EEE4;border-left:3px solid var(--rule);
+  margin-top:8px;border-radius:var(--radius)}
+:root[data-skin="pull"] .row{background:#F3EEE4;border-top:1px solid var(--rule)}
+
+/* reading stepper */
+:root[data-skin="pull"] .rtitle{font-size:30px}
+:root[data-skin="pull"] .rpill{font-size:13px;padding:6px 16px}
+:root[data-skin="pull"] .rbtn{border-radius:var(--radius);padding:17px 8px;font-size:16px}
+:root[data-skin="pull"] .rbtn.solid{background:#141210;border-color:#141210;color:#F3EEE4}
+:root[data-skin="pull"] .rcount{font-family:var(--mark)}
+
+/* settings: monospace uppercase section labels */
+:root[data-skin="pull"] .panel .frow{padding:12px 14px;border-bottom:1px solid var(--rule)}
+
+/* ---------- filters, Pull List skin ---------- */
+:root[data-skin="pull"] .filters{background:var(--surface);border-bottom:1px solid var(--rule);
+  padding:10px 14px 12px}
+:root[data-skin="pull"] .flabel{font-family:var(--mark);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-soft)}
+:root[data-skin="pull"] .filters .chip{border-radius:999px;border:1.5px solid var(--ink);
+  background:var(--surface);color:var(--ink);font-size:13px;font-weight:600;padding:7px 15px}
+:root[data-skin="pull"] .filters .chip[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+:root[data-skin="pull"] .filters .chip[aria-pressed="false"]{opacity:.85}
+:root[data-skin="pull"] .search{border:1.5px solid var(--ink);border-radius:999px;
+  background:var(--surface);padding:9px 15px;font-size:14px}
+:root[data-skin="pull"] .search::placeholder{color:var(--ink-soft);opacity:.75}
+:root[data-skin="pull"] #depthChips .chip{border-radius:0;border-right-width:0}
+:root[data-skin="pull"] #depthChips .chip:first-child{border-radius:999px 0 0 999px}
+:root[data-skin="pull"] #depthChips .chip:last-child{border-radius:0 999px 999px 0;border-right-width:1.5px}
+:root[data-skin="pull"] .tally{font-family:var(--mark);font-size:11px;color:var(--ink-soft);margin-left:auto}
+:root[data-skin="pull"] .linkbtn{font-family:var(--mark);font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink-soft)}
+:root[data-skin="pull"] #eraSel{border:1.5px solid var(--ink);border-radius:999px;
+  background:var(--surface);padding:7px 12px;font-size:13px}
+
+
+/* Pull List skin: search leads the filter stack, as it does on X-Men */
+:root[data-skin="pull"] .filters{display:flex;flex-direction:column;gap:9px}
+:root[data-skin="pull"] .filters .frow:has(#search){order:-1}
+:root[data-skin="pull"] .filters .frow:has(#search) .flabel{display:none}
+:root[data-skin="pull"] .filters .frow:has(#search) .search{flex:1 1 100%;min-width:0}
+
+/* Elseworlds story eras (35-44): one plum family, distinct from the eight periods */
+:root{--e35-t:#F6F2F7;--e35-a:#8A5298;--e35-d:#4D3154;--e36-t:#F6F2F7;--e36-a:#895298;--e36-d:#4C3154;--e37-t:#F6F2F7;--e37-a:#875298;--e37-d:#4B3154;--e38-t:#F6F2F7;--e38-a:#855298;--e38-d:#4A3154;--e39-t:#F6F2F7;--e39-a:#835298;--e39-d:#493154;--e40-t:#F6F2F7;--e40-a:#815298;--e40-d:#483154;--e41-t:#F6F2F7;--e41-a:#7F5298;--e41-d:#473154;--e42-t:#F5F2F7;--e42-a:#7E5298;--e42-d:#463154;--e43-t:#F5F2F7;--e43-a:#7C5298;--e43-d:#453154;--e44-t:#F5F2F7;--e44-a:#7A5298;--e44-d:#453154}
+
+/* Version beacon: lets the app detect at runtime whether this stylesheet is
+   new enough to contain the classic skin, instead of failing silently. */
+[data-skinprobe]{--skin-ok:1}
+
+
+/* ---------- classic skin: filter panel sizing ----------
+   PRIORITY and FORMAT share one .frow, so their labels collided mid-row and
+   the last chip group was clipped by the sticky panel. Each label now takes a
+   full line, and the panel scrolls with the list rather than pinning over it —
+   it belongs to the checklist, not to every screen. */
+:root[data-skin="pull"] .filters{position:static;max-height:none;overflow:visible;
+  padding:12px 14px 16px}
+:root[data-skin="pull"] .frow{align-items:flex-start;gap:8px 6px}
+:root[data-skin="pull"] .flabel{flex:1 1 100%;width:auto;margin:2px 0 0}
+:root[data-skin="pull"] .filters .chip{padding:6px 13px;font-size:12.5px}
+:root[data-skin="pull"] .filters .chip[data-kind="strand"]{font-size:12px;padding:6px 11px}
+:root[data-skin="pull"] .tally{flex:1 1 100%;text-align:right;margin:0}
+
+
+/* ---------- classic skin: nothing follows the scroll ----------
+   The tab bar and the era/period headers were sticky, so they tracked down the
+   page as you read. In this skin everything scrolls away with the content. */
+:root[data-skin="pull"] .tabs,
+:root[data-skin="pull"] .pstats,
+:root[data-skin="pull"] .period-head,
+:root[data-skin="pull"] .era-head,
+:root[data-skin="pull"] .arc-head,
+:root[data-skin="pull"] .mini,
+:root[data-skin="pull"] .filters{position:static}
+
+/* ---------- classic skin: filter groups stack cleanly ---------- */
+:root[data-skin="pull"] .filters{display:block;padding:12px 14px 18px}
+:root[data-skin="pull"] .frow{display:block;margin:0 0 12px}
+:root[data-skin="pull"] .frow:last-child{margin-bottom:0}
+:root[data-skin="pull"] .flabel{display:block;width:auto;margin:0 0 6px}
+:root[data-skin="pull"] .frow > .chip,
+:root[data-skin="pull"] .frow > span[role="group"] > .chip{margin:0 5px 5px 0}
+:root[data-skin="pull"] span[role="group"]{display:block}
+:root[data-skin="pull"] .search{display:block;width:100%;margin:0 0 10px}
+:root[data-skin="pull"] .tally{display:block;text-align:right;margin:4px 0 0}
+
+
+/* ---------- tabbed mode: nothing follows the scroll either ----------
+   Same treatment as the classic skin. This selector covers both, since the
+   classic skin also runs on the tabbed shell. Compact keeps its sticky topbar. */
+:root[data-layout="tabs"] .tabs,
+:root[data-layout="tabs"] .pstats,
+:root[data-layout="tabs"] .period-head,
+:root[data-layout="tabs"] .era-head,
+:root[data-layout="tabs"] .arc-head,
+:root[data-layout="tabs"] .mini,
+:root[data-layout="tabs"] .filters{position:static}
+
+/* ---------- classic skin: depth control on one line ----------
+   "Barebones · 75 / Essential · 508 / Everything · 4,721" wrapped onto three
+   rows; as one segmented control the three share the width evenly instead. */
+:root[data-skin="pull"] #depthChips{display:flex;flex-wrap:nowrap;width:100%;gap:0}
+:root[data-skin="pull"] #depthChips .chip{flex:1 1 0;min-width:0;margin:0;
+  font-size:11px;letter-spacing:0;padding:8px 3px;text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---------- settings sections ---------- */
+.shead{margin:18px 14px 6px;font-family:var(--mark);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-soft);opacity:.85}
+.shead:first-child{margin-top:10px}
+.panel .shead + .frow{margin-top:0}
+
+/* combo badge: mark rows that are both bookmarked and read */
+:root[data-combo="1"] .row[data-s="read"] .bm[aria-pressed="true"]{
+  background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* tap-to-reveal notes: hide the inline note until the row is tapped */
+:root[data-reveal="1"] .subnote{display:none}
+:root[data-reveal="1"] .row:focus-within .subnote,
+:root[data-reveal="1"] .row:hover .subnote{display:inline}
+
+/* ---------- paper swatches ---------- */
+.swatches{display:flex;gap:7px;flex-wrap:wrap}
+.swatch{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--rule);
+  cursor:pointer;padding:0;background:var(--surface)}
+.swatch[aria-pressed="true"]{outline:2px solid var(--action);outline-offset:2px}
+.swatch[data-bg="0"]{background:#FFFFFF}
+.swatch[data-bg="1"]{background:#EDE7DB}
+.swatch[data-bg="2"]{background:#E8E8E8}
+.swatch[data-bg="3"]{background:#F3E4E4}
+.swatch[data-bg="4"]{background:#E2EFE6}
+.swatch[data-bg="5"]{background:#E3ECF5}
+.swatch[data-bg="6"]{background:#EAE4F2}
+:root[data-bg="1"]{--surface:#EDE7DB;--tint:#E4DCCB}
+:root[data-bg="2"]{--surface:#E8E8E8;--tint:#DEDEDE}
+:root[data-bg="3"]{--surface:#F3E4E4;--tint:#EBD7D7}
+:root[data-bg="4"]{--surface:#E2EFE6;--tint:#D4E7DA}
+:root[data-bg="5"]{--surface:#E3ECF5;--tint:#D3E1EF}
+:root[data-bg="6"]{--surface:#EAE4F2;--tint:#DED5EC}
