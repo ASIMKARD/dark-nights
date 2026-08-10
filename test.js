@@ -34,6 +34,7 @@ function run(){
   HAS_ELSE = !!(D.issueEra && D.issueEra.length);
   const d = dom.window.document, root = d.documentElement;
   ok('no runtime errors at boot', errs.length === 0);
+  ok('boots into the dark nights skin', root.dataset.skin === 'forge');
   if (errs.length) errs.slice(0,4).forEach(e => console.log('   err:', e.slice(0,160)));
 
   ok('exactly one #tabs nav', qa('nav.tabs').length === 1);
@@ -239,29 +240,36 @@ function run(){
   tabbedBtn && tabbedBtn.click();
   ok('leaving classic clears the skin', !root.hasAttribute('data-skin'));
 
-  ok('default layout = tabs', root.dataset.layout === 'tabs');
-  ok('phead visible in tabs', q('#phead') && !q('#phead').hidden);
-  ok('topbar hidden in tabs', q('.topbar') && q('.topbar').hidden === true);
+  ok('tabbed layout = tabs', root.dataset.layout === 'tabs');
+  ok('phead visible by default', q('#phead') && !q('#phead').hidden);
+  ok('topbar hidden by default', q('.topbar') && q('.topbar').hidden === true);
 
-  // ---- switch to classic ----
-  const classic = segBtns.find(b => /compact/i.test(b.textContent));
-  classic && classic.click();
-  ok('click classic -> data-layout classic', root.dataset.layout === 'classic');
-  ok('classic: topbar visible', q('.topbar').hidden === false);
-  ok('classic: tabs nav hidden', q('#tabs').hidden === true);
-  ok('classic: phead hidden', q('#phead').hidden === true);
-  ok('classic: checklist visible', q('#app') && q('#app').hidden === false);
+  // ---- the compact shell was removed for this franchise ----
+  ok('compact layout option is gone', !segBtns.some(b => /^compact$/i.test(b.textContent.trim())));
 
-  // ---- classic: open settings via the gear, then switch back ----
-  const gear = q('#setBtn');
-  ok('classic: gear button exists', !!gear);
-  gear && gear.click();
-  ok('classic: gear opens settings', q('#panel').hidden === false);
-  ok('classic: gear aria-expanded true', gear && gear.getAttribute('aria-expanded') === 'true');
+  // ---- switch to the Dark Nights (forge) skin ----
+  const forge = segBtns.find(b => /dark nights/i.test(b.textContent));
+  ok('dark nights layout option exists', !!forge);
+  forge && forge.click();
+  ok('forge sets data-skin', root.dataset.skin === 'forge');
+  ok('forge keeps the tabbed shell', root.dataset.layout === 'tabs');
+  ok('forge: tabs nav visible', q('#tabs').hidden === false);
+  ok('forge: checklist visible', q('#app') && q('#app').hidden === false);
+  {
+    const sheet = require('fs').readFileSync('styles.css','utf8');
+    ok('forge skin rules present', sheet.indexOf(':root[data-skin="forge"]') !== -1);
+    ok('forge is zero-radius', /data-skin="forge"\]\{[^}]*--radius:0px/.test(sheet));
+    ok('forge uses a grid of plates', /data-skin="forge"\] \.arc\{display:grid/.test(sheet));
+    ok('forge has nothing sticky', /data-skin="forge"\] \.era-head\{position:static/.test(sheet));
+    ok('forge numbers its eras', /counter-increment:forge-era/.test(sheet));
+    ok('classic override outranks the inline block', /html:root\[data-skin="pull"\]/.test(sheet));
+    ok('classic keeps the original Pull List paper',
+       /:root\[data-skin="pull"\]\{[^}]*--surface:#EDE7DB/.test(sheet));
+  }
   const tabbed = segBtns.find(b => /tabbed/i.test(b.textContent));
   tabbed && tabbed.click();
-  ok('classic -> tabbed via seg works', root.dataset.layout === 'tabs');
-  ok('tabs: gear hidden again', q('#setBtn').hidden === true);
+  ok('forge -> tabbed via seg works', root.dataset.layout === 'tabs');
+  ok('tabbed clears the skin', !root.hasAttribute('data-skin'));
 
   // ---- walk the tabs ----
   dom.window.addEventListener('error', e => errs.push('winerr: ' + e.message));
