@@ -260,7 +260,7 @@ function run(){
     ok('forge skin rules present', sheet.indexOf(':root[data-skin="forge"]') !== -1);
     ok('forge is zero-radius', /data-skin="forge"\]\{[^}]*--radius:0px/.test(sheet));
     ok('forge uses a grid of plates', /data-skin="forge"\] \.arc\{display:grid/.test(sheet));
-    ok('forge has nothing sticky', /data-skin="forge"\] \.era-head\{position:static/.test(sheet));
+    ok('forge has nothing sticky', /data-skin="forge"\]\[data-layout="tabs"\] \.pstats/.test(sheet) && /position:static !important/.test(sheet));
     ok('forge numbers its eras', /counter-increment:forge-era/.test(sheet));
     ok('classic override outranks the inline block', /html:root\[data-skin="pull"\]/.test(sheet));
     ok('classic keeps the original Pull List paper',
