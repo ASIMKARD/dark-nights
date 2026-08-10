@@ -14,6 +14,28 @@
 <link rel="icon" href="./icons/icon-192.png">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
 <link rel="stylesheet" href="./styles.css">
+<style id="dn-theme">
+/* Dark Multiverse palette, inlined so legibility never depends on a
+   separately-uploaded styles.css landing. Loads after the stylesheet. */
+:root{color-scheme:dark;
+ --bg:#0B0A0F;--surface:#16131C;--tint:#1E1926;
+ --ink:#F2E9E4;--ink-soft:#A295A6;
+ --accent:#C8102E;--action:#D4A21A;--rule:#2C2536}
+:root[data-bg="0"]{--surface:#16131C;--tint:#1E1926}
+:root[data-bg="1"]{--surface:#1B1520;--tint:#241C2B}
+:root[data-bg="2"]{--surface:#14171B;--tint:#1D2128}
+:root[data-bg="3"]{--surface:#1E1217;--tint:#2A1820}
+:root[data-bg="4"]{--surface:#101A18;--tint:#182622}
+:root[data-bg="5"]{--surface:#111726;--tint:#1A2134}
+:root[data-bg="6"]{--surface:#191527;--tint:#241F37}
+.swatch[data-bg="0"]{background:#16131C}
+.swatch[data-bg="1"]{background:#1B1520}
+.swatch[data-bg="2"]{background:#14171B}
+.swatch[data-bg="3"]{background:#1E1217}
+.swatch[data-bg="4"]{background:#101A18}
+.swatch[data-bg="5"]{background:#111726}
+.swatch[data-bg="6"]{background:#191527}
+</style>
 </head>
 <body>
 
@@ -31,7 +53,7 @@
 <header class="phead" id="phead" hidden>
   <h1 class="ptitle">The Pull List</h1>
   <p class="psub">Offline Edition &mdash; progress saves in this browser only, no account needed</p>
-  <p class="pmeta"><span id="strapline"></span> &middot; <b id="buildtag">build v2</b></p>
+  <p class="pmeta"><span id="strapline"></span> &middot; <b id="buildtag">build v4</b></p>
   <div class="pbar2"><i id="pfill2" style="width:0%"></i></div>
   <div class="pstats"><span id="pread">0 / 0 read</span><span id="premain">&mdash;</span></div>
 </header>

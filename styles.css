@@ -389,10 +389,10 @@ img,svg,pre,table{max-width:100%}
    so the compact and tabbed layouts are untouched.
    ================================================================ */
 :root[data-skin="pull"]{
-  --surface:#EDE7DB; --tint:#E6DFD0; --ink:#191712; --ink-soft:#6B6459;
-  --rule:#CFC6B4; --action:#1E4C8A; --accent:#B3202E; --radius:8px;
-  --p0:#C0392B; --p1:#96302B; --p2:#2E2A36; --p3:#7A2E5C;
-  --p4:#1F4E79; --p5:#1959A7; --p6:#166B7A; --p7:#C81E2B;
+  --surface:#16131C; --tint:#1E1926; --ink:#F2E9E4; --ink-soft:#A295A6;
+  --rule:#2C2536; --action:#D4A21A; --accent:#C8102E; --radius:8px;
+  --p0:#C8102E; --p1:#8E1230; --p2:#5C1436; --p3:#3B173A;
+  --p4:#2A1836; --p5:#1E1630; --p6:#171326; --p7:#D4A21A;
 }
 :root[data-skin="pull"] body{background:var(--surface);color:var(--ink)}
 
