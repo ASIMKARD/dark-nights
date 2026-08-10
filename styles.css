@@ -626,15 +626,27 @@ html:root[data-skin="forge"]{
    heading follows the scroll.
    ---------------------------------------------------------------- */
 
-/* nothing tracks the scroll in this skin */
+/* nothing tracks the scroll in this skin.
+   NOTE: forge runs ON data-layout="tabs", so the layout-scoped sticky rules
+   (.pstats at :root[data-layout="tabs"], and .period-head's tabs override)
+   are NOT reached by a skin-only selector. Both axes are covered here, and
+   !important is used so no later or more specific rule can reinstate them. */
 html:root[data-skin="forge"] .topbar,
 html:root[data-skin="forge"] .tabs,
 html:root[data-skin="forge"] .filters,
 html:root[data-skin="forge"] .panel,
 html:root[data-skin="forge"] .mini,
 html:root[data-skin="forge"] .pstats,
+html:root[data-skin="forge"] .period,
 html:root[data-skin="forge"] .period-head,
-html:root[data-skin="forge"] .era-head{position:static;top:auto}
+html:root[data-skin="forge"] .era,
+html:root[data-skin="forge"] .era-head,
+html:root[data-skin="forge"] .arc,
+html:root[data-skin="forge"] .arc-head,
+html:root[data-skin="forge"][data-layout="tabs"] .pstats,
+html:root[data-skin="forge"][data-layout="tabs"] .period-head,
+html:root[data-skin="forge"][data-layout="tabs"] .era-head{
+  position:static !important;top:auto !important;z-index:auto !important}
 
 /* masthead: struck plate, scrolls away with the page */
 html:root[data-skin="forge"] .phead{background:linear-gradient(180deg,#161020,#0E0B12);
