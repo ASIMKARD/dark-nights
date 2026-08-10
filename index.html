@@ -53,7 +53,7 @@
 <header class="phead" id="phead" hidden>
   <h1 class="ptitle">The Pull List</h1>
   <p class="psub">Offline Edition &mdash; progress saves in this browser only, no account needed</p>
-  <p class="pmeta"><span id="strapline"></span> &middot; <b id="buildtag">build v4</b></p>
+  <p class="pmeta"><span id="strapline"></span> &middot; <b id="buildtag">build v6</b></p>
   <div class="pbar2"><i id="pfill2" style="width:0%"></i></div>
   <div class="pstats"><span id="pread">0 / 0 read</span><span id="premain">&mdash;</span></div>
 </header>
@@ -907,7 +907,7 @@
 
   function isTabbed() {
     var l = state.settings.layout;
-    return l === 'tabs' || l === 'pull';
+    return l === 'tabs' || l === 'pull' || l === 'forge';
   }
 
   // The skin is pure CSS. If styles.css on the server predates v16 the rules
@@ -925,10 +925,11 @@
 
   function applyLayout() {
     var lay = state.settings.layout;
-    var tabs = (lay === 'tabs' || lay === 'pull');
+    var tabs = (lay === 'tabs' || lay === 'pull' || lay === 'forge');
     document.documentElement.dataset.layout = tabs ? 'tabs' : 'classic';
     // 'pull' is the X-Men Pull List look: same tab structure, different skin
     if (lay === 'pull') document.documentElement.dataset.skin = 'pull';
+    else if (lay === 'forge') document.documentElement.dataset.skin = 'forge';
     else document.documentElement.removeAttribute('data-skin');
     document.getElementById('tabs').hidden = !tabs;
     document.getElementById('phead').hidden = !tabs;
@@ -1069,7 +1070,7 @@
 
   function buildSettingsUI() {
     seg(document.getElementById('segLayout'),
-      [['compact', 'compact'], ['tabs', 'tabbed'], ['pull', 'classic']],
+      [['tabs', 'tabbed'], ['pull', 'classic'], ['forge', 'dark nights']],
       function () { return state.settings.layout; },
       function (v) {
         state.settings.layout = v;
@@ -1651,10 +1652,11 @@
       // Test the RAW saved object — the defaults already carry lv:2, so the
       // merged value would always look migrated.
       if (savedSettings.lv !== 2) {
-        if (state.settings.layout === 'classic') state.settings.layout = 'compact';
+        if (state.settings.layout === 'classic') state.settings.layout = 'forge';
         state.settings.lv = 2;
         save(K.settings, state.settings);
       }
+      if (state.settings.layout === 'compact') { state.settings.layout = 'forge'; save(K.settings, state.settings); }
       var savedF = r[2] || {};
       var sv = (typeof savedF.sv === 'number') ? savedF.sv
              : (savedF.strands != null ? 15 : D.strands.length);

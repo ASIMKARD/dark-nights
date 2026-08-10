@@ -389,10 +389,10 @@ img,svg,pre,table{max-width:100%}
    so the compact and tabbed layouts are untouched.
    ================================================================ */
 :root[data-skin="pull"]{
-  --surface:#16131C; --tint:#1E1926; --ink:#F2E9E4; --ink-soft:#A295A6;
-  --rule:#2C2536; --action:#D4A21A; --accent:#C8102E; --radius:8px;
-  --p0:#C8102E; --p1:#8E1230; --p2:#5C1436; --p3:#3B173A;
-  --p4:#2A1836; --p5:#1E1630; --p6:#171326; --p7:#D4A21A;
+  --surface:#EDE7DB; --tint:#E6DFD0; --ink:#191712; --ink-soft:#6B6459;
+  --rule:#CFC6B4; --action:#1E4C8A; --accent:#B3202E; --radius:8px;
+  --p0:#C0392B; --p1:#96302B; --p2:#2E2A36; --p3:#7A2E5C;
+  --p4:#1F4E79; --p5:#1959A7; --p6:#166B7A; --p7:#C81E2B;
 }
 :root[data-skin="pull"] body{background:var(--surface);color:var(--ink)}
 
@@ -401,13 +401,13 @@ img,svg,pre,table{max-width:100%}
 :root[data-skin="pull"] .ptitle{font-size:34px;letter-spacing:.005em}
 :root[data-skin="pull"] .psub{font-size:13.5px}
 :root[data-skin="pull"] .pmeta{font-family:var(--mark);font-size:13px}
-:root[data-skin="pull"] .pbar2{height:11px;background:var(--rule)}
-:root[data-skin="pull"] .pbar2 i{background:var(--action)}
+:root[data-skin="pull"] .pbar2{height:11px;background:#D8D0BE}
+:root[data-skin="pull"] .pbar2 i{background:#B9B1A0}
 :root[data-skin="pull"] .pstats{font-family:var(--mark);font-size:13px}
 
 /* tab bar: black, uppercase, letter-spaced, blue active underline */
-:root[data-skin="pull"] .tabs{background:var(--bg);border-bottom:0}
-:root[data-skin="pull"] .tab{color:var(--ink-soft);text-transform:uppercase;letter-spacing:.09em;
+:root[data-skin="pull"] .tabs{background:#141210;border-bottom:0}
+:root[data-skin="pull"] .tab{color:#CFC8BC;text-transform:uppercase;letter-spacing:.09em;
   font-size:13px;font-weight:600;padding:15px 4px;border-bottom:3px solid transparent}
 :root[data-skin="pull"] .tab[aria-selected="true"]{color:#fff;border-bottom-color:var(--action)}
 
@@ -415,12 +415,12 @@ img,svg,pre,table{max-width:100%}
 :root[data-skin="pull"] .filters{background:var(--surface);border-bottom:1px solid var(--rule)}
 :root[data-skin="pull"] .chip{border-radius:999px;border:1.5px solid var(--ink);
   background:var(--surface);color:var(--ink);padding:9px 16px;font-size:14px}
-:root[data-skin="pull"] .chip[aria-pressed="true"]{background:var(--action);color:#0B0A0F;border-color:var(--action)}
+:root[data-skin="pull"] .chip[aria-pressed="true"]{background:#141210;color:#fff;border-color:#141210}
 :root[data-skin="pull"] .seg{border-radius:999px;border:1.5px solid var(--ink);overflow:hidden}
 :root[data-skin="pull"] .seg button{padding:9px 15px;font-size:14px;background:var(--surface);color:var(--ink)}
-:root[data-skin="pull"] .seg button[aria-pressed="true"]{background:var(--action);color:#0B0A0F}
+:root[data-skin="pull"] .seg button[aria-pressed="true"]{background:#141210;color:#fff}
 :root[data-skin="pull"] .search{border-radius:999px;border:1.5px solid var(--rule);
-  background:var(--surface);padding:12px 16px;font-size:15px}
+  background:#F3EEE4;padding:12px 16px;font-size:15px}
 :root[data-skin="pull"] .flabel{font-family:var(--mark);font-size:11.5px;
   text-transform:uppercase;letter-spacing:.07em}
 
@@ -441,20 +441,20 @@ img,svg,pre,table{max-width:100%}
 :root[data-skin="pull"] .period[data-p="5"] .period-head{background:var(--p5)}
 :root[data-skin="pull"] .period[data-p="6"] .period-head{background:var(--p6)}
 :root[data-skin="pull"] .period[data-p="7"] .period-head{background:var(--p7)}
-:root[data-skin="pull"] .period-intro{background:var(--surface);border-radius:0 0 var(--radius) var(--radius);
+:root[data-skin="pull"] .period-intro{background:#F3EEE4;border-radius:0 0 var(--radius) var(--radius);
   border:1px solid var(--rule);border-top:0}
 :root[data-skin="pull"] .period-body{background:transparent}
 
 /* second-tier era headers stay quiet inside a banner */
-:root[data-skin="pull"] .period .era-head{background:var(--surface);border-left:3px solid var(--rule);
+:root[data-skin="pull"] .period .era-head{background:#F3EEE4;border-left:3px solid var(--rule);
   margin-top:8px;border-radius:var(--radius)}
-:root[data-skin="pull"] .row{background:var(--surface);border-top:1px solid var(--rule)}
+:root[data-skin="pull"] .row{background:#F3EEE4;border-top:1px solid var(--rule)}
 
 /* reading stepper */
 :root[data-skin="pull"] .rtitle{font-size:30px}
 :root[data-skin="pull"] .rpill{font-size:13px;padding:6px 16px}
 :root[data-skin="pull"] .rbtn{border-radius:var(--radius);padding:17px 8px;font-size:16px}
-:root[data-skin="pull"] .rbtn.solid{background:var(--bg);border-color:var(--rule);color:var(--action)}
+:root[data-skin="pull"] .rbtn.solid{background:#141210;border-color:#141210;color:#F3EEE4}
 :root[data-skin="pull"] .rcount{font-family:var(--mark)}
 
 /* settings: monospace uppercase section labels */
@@ -489,7 +489,7 @@ img,svg,pre,table{max-width:100%}
 :root[data-skin="pull"] .filters .frow:has(#search) .search{flex:1 1 100%;min-width:0}
 
 /* Elseworlds story eras (35-44): one plum family, distinct from the eight periods */
-:root{--e35-t:#281521;--e35-a:#D2901C;--e35-d:#F2E9E4;--e36-t:#281521;--e36-a:#D3931C;--e36-d:#F2E9E4;--e37-t:#281522;--e37-a:#D3971C;--e37-d:#F2E9E4;--e38-t:#291522;--e38-a:#D39B1B;--e38-d:#F2E9E4;--e39-t:#2A1522;--e39-a:#D49E1A;--e39-d:#F2E9E4;--e40-t:#2A1522;--e40-a:#D4A21A;--e40-d:#F2E9E4;--e41-t:#2A1522;--e41-a:#D4A21A;--e41-d:#F2E9E4;--e42-t:#2A1522;--e42-a:#D4A21A;--e42-d:#F2E9E4;--e43-t:#2A1522;--e43-a:#D4A21A;--e43-d:#F2E9E4;--e44-t:#2A1522;--e44-a:#D4A21A;--e44-d:#F2E9E4}
+:root{--e35-t:#F6F2F7;--e35-a:#8A5298;--e35-d:#4D3154;--e36-t:#F6F2F7;--e36-a:#895298;--e36-d:#4C3154;--e37-t:#F6F2F7;--e37-a:#875298;--e37-d:#4B3154;--e38-t:#F6F2F7;--e38-a:#855298;--e38-d:#4A3154;--e39-t:#F6F2F7;--e39-a:#835298;--e39-d:#493154;--e40-t:#F6F2F7;--e40-a:#815298;--e40-d:#483154;--e41-t:#F6F2F7;--e41-a:#7F5298;--e41-d:#473154;--e42-t:#F5F2F7;--e42-a:#7E5298;--e42-d:#463154;--e43-t:#F5F2F7;--e43-a:#7C5298;--e43-d:#453154;--e44-t:#F5F2F7;--e44-a:#7A5298;--e44-d:#453154}
 
 /* Version beacon: lets the app detect at runtime whether this stylesheet is
    new enough to contain the classic skin, instead of failing silently. */
@@ -585,3 +585,102 @@ img,svg,pre,table{max-width:100%}
 :root[data-bg="4"]{--surface:#101A18;--tint:#182622}
 :root[data-bg="5"]{--surface:#111726;--tint:#1A2134}
 :root[data-bg="6"]{--surface:#191527;--tint:#241F37}
+
+/* === classic skin: original Pull List era ramp (light) === */
+:root[data-skin="pull"]{
+  --surface:#EDE7DB; --tint:#E6DFD0; --ink:#191712; --ink-soft:#6B6459;
+  --rule:#CFC6B4; --action:#1E4C8A; --accent:#B3202E; --radius:8px;
+  --p0:#C0392B; --p1:#96302B; --p2:#2E2A36; --p3:#7A2E5C;
+  --p4:#1F4E79; --p5:#1959A7; --p6:#166B7A; --p7:#C81E2B;
+  --e0-t:#FEF4F3;--e0-a:#B58982;--e0-d:#684F4B;--e1-t:#FEF3F2;--e1-a:#B7867E;--e1-d:#684D48;--e2-t:#FEF2F0;--e2-a:#B8837B;--e2-d:#684A45;--e3-t:#FEF1EF;--e3-a:#B98077;--e3-d:#694843;--e4-t:#FEF0EE;--e4-a:#8196B1;--e4-d:#48576A;--e5-t:#FEEFED;--e5-a:#BA7D73;--e5-d:#694640;--e6-t:#FEEEEB;--e6-a:#7D94B3;--e6-d:#45566B;--e7-t:#FEEDEA;--e7-a:#7A93B5;--e7-d:#43546C;--e8-t:#FEECE9;--e8-a:#BC7970;--e8-d:#69433E;--e9-t:#FEEAE8;--e9-a:#BD766C;--e9-d:#69413B;--e10-t:#FEE9E6;--e10-a:#BE7268;--e10-d:#693E39;--e11-t:#FEE8E5;--e11-a:#7792B6;--e11-d:#40536D;--e12-t:#FEE7E4;--e12-a:#7490B8;--e12-d:#3D516E;--e13-t:#FEE6E3;--e13-a:#718FBA;--e13-d:#3B506F;--e14-t:#FEE5E1;--e14-a:#6E8DBC;--e14-d:#384F70;--e15-t:#FEE4E0;--e15-a:#C06F64;--e15-d:#693C36;--e16-t:#FEE2DF;--e16-a:#6B8BBE;--e16-d:#364D71;--e17-t:#FEE1DD;--e17-a:#C16B60;--e17-d:#693A34;--e18-t:#FEE0DC;--e18-a:#678ABF;--e18-d:#334B72;--e19-t:#FEDFDB;--e19-a:#C3675C;--e19-d:#693732;--e20-t:#FEDEDA;--e20-a:#6488C1;--e20-d:#314A73;--e21-t:#FEDDD8;--e21-a:#6186C3;--e21-d:#2E4873;--e22-t:#FEDBD7;--e22-a:#5D84C5;--e22-d:#2C4774;--e23-t:#FEDAD6;--e23-a:#C46358;--e23-d:#69352F;--e24-t:#FED9D4;--e24-a:#5A82C7;--e24-d:#294575;--e25-t:#FED8D3;--e25-a:#C65F54;--e25-d:#69332D;--e26-t:#FED6D2;--e26-a:#5780C9;--e26-d:#274375;--e27-t:#FFD5D0;--e27-a:#537ECB;--e27-d:#254276;--e28-t:#FFD4CF;--e28-a:#507CCD;--e28-d:#234076;--e29-t:#FFD3CE;--e29-a:#4C79CF;--e29-d:#203E77;--e30-t:#FFD2CC;--e30-a:#C85B50;--e30-d:#69312B;--e31-t:#FFD0CB;--e31-a:#4977D1;--e31-d:#1E3C77;--e32-t:#FFCFCA;--e32-a:#CA574C;--e32-d:#692E29;--e33-t:#FFCEC8;--e33-a:#CB5348;--e33-d:#682C27;--e34-t:#FFCDC7;--e34-a:#4575D3;--e34-d:#1C3B78;
+  --gap-bg:#EFEFEF;--gap-ink:#6B6B6B;
+}
+
+/* ================================================================
+   DARK NIGHTS "FORGE" SKIN  —  data-skin="forge"
+   The third layout, and deliberately unlike the other two: the
+   tabbed shell is soft and rounded, the classic Pull List skin is
+   light paper with notched banners. This one is forged metal —
+   zero radius, hard angular notches cut with clip-path, Anton
+   display caps, and a molten crimson-to-gold heat ramp that runs
+   hotter as the saga escalates. Everything is scoped to
+   [data-skin="forge"] so the other two are untouched.
+   ================================================================ */
+:root[data-skin="forge"]{
+  --surface:#0E0B12; --tint:#15111C; --ink:#F4EDE8; --ink-soft:#9C8FA6;
+  --rule:#2A2135; --action:#E8B023; --accent:#D01230; --radius:0px;
+  --heat0:#D01230; --heat1:#B31C3A; --heat2:#8A2140; --heat3:#5C2342;
+  --forge-edge:#3A2A18;
+}
+:root[data-skin="forge"] body{background:
+  linear-gradient(180deg,#0B0810 0%,#100C16 40%,#0B0810 100%) fixed,var(--surface);
+  color:var(--ink)}
+
+/* header: struck-metal plate */
+:root[data-skin="forge"] .phead{background:linear-gradient(180deg,#161020,#0E0B12);
+  border-bottom:2px solid var(--action);padding:14px 16px 10px}
+:root[data-skin="forge"] .pname{font-family:'Anton',Impact,sans-serif;font-weight:400;
+  font-size:30px;line-height:.92;letter-spacing:.02em;text-transform:uppercase;
+  color:var(--ink);text-shadow:0 0 18px rgba(208,18,48,.45)}
+:root[data-skin="forge"] .pmeta{font-family:var(--mark);font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+:root[data-skin="forge"] .pbar{height:3px;border-radius:0;background:#241B30}
+:root[data-skin="forge"] .pbar i{background:linear-gradient(90deg,var(--accent),var(--action))}
+
+/* tabs: hard-edged, gold underline on the live one */
+:root[data-skin="forge"] .tabs{background:#0B0810;border-bottom:1px solid var(--rule)}
+:root[data-skin="forge"] .tab{font-family:var(--mark);font-size:11.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-soft);border-bottom:2px solid transparent}
+:root[data-skin="forge"] .tab[aria-selected="true"]{color:var(--action);
+  border-bottom-color:var(--action);background:rgba(232,176,35,.06)}
+
+/* era header: a forged bar with a notch cut out of the trailing edge */
+:root[data-skin="forge"] .era-head{background:linear-gradient(90deg,var(--acc),#100C16 88%);
+  border:0;border-left:6px solid var(--action);padding:11px 26px 11px 14px;
+  clip-path:polygon(0 0,100% 0,calc(100% - 18px) 100%,0 100%)}
+:root[data-skin="forge"] .era-head h2{font-family:'Anton',Impact,sans-serif;font-weight:400;
+  font-size:15px;letter-spacing:.13em;text-transform:uppercase;color:#FFF}
+:root[data-skin="forge"] .era-head .n{color:rgba(255,255,255,.72)}
+:root[data-skin="forge"] .era-intro{background:#100C16;border-left:6px solid var(--rule);
+  color:var(--ink-soft);font-style:normal;padding:12px 16px}
+
+/* arc header: gold hairline above, small-caps label */
+:root[data-skin="forge"] .arc-head{background:#13101B;border-left:0;
+  border-top:1px solid var(--forge-edge);padding:12px 14px 6px}
+:root[data-skin="forge"] .arc-head h3{font-family:'Anton',Impact,sans-serif;font-weight:400;
+  font-size:16px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink)}
+:root[data-skin="forge"] .arc-meta{font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-soft)}
+:root[data-skin="forge"] .blurb{background:transparent;color:var(--ink-soft);
+  border-left:2px solid var(--accent);padding-left:12px;margin:8px 14px 4px}
+
+/* rows: flat slabs, hairline separated, gold edge when unread */
+:root[data-skin="forge"] .row{background:#100C16;border-top:1px solid #1D1726;
+  border-left:3px solid transparent;padding:var(--dens) 14px}
+:root[data-skin="forge"] .row:hover{background:#161020}
+:root[data-skin="forge"] .row[data-s="unread"]{border-left-color:var(--forge-edge)}
+:root[data-skin="forge"] .row[data-s="read"]{border-left-color:var(--accent);background:#0C0912}
+:root[data-skin="forge"] .row[data-s="reading"]{border-left-color:var(--action)}
+:root[data-skin="forge"] .title{letter-spacing:.01em}
+
+/* badges + buttons: sharp corners, struck edges */
+:root[data-skin="forge"] .b{border-radius:0;font-family:var(--mark);font-size:10.5px;
+  letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--rule)}
+:root[data-skin="forge"] .b.core{background:var(--accent);border-color:var(--accent);color:#FFF}
+:root[data-skin="forge"] .chip{border-radius:0;font-family:var(--mark);font-size:11.5px;
+  letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--rule)}
+:root[data-skin="forge"] .chip[aria-pressed="true"]{background:var(--action);
+  border-color:var(--action);color:#0B0810}
+:root[data-skin="forge"] .seg{border-radius:0;border:1px solid var(--rule)}
+:root[data-skin="forge"] .seg button[aria-pressed="true"]{background:var(--action);color:#0B0810}
+:root[data-skin="forge"] .rbtn{border-radius:0;border:1px solid var(--forge-edge);
+  font-family:var(--mark);letter-spacing:.08em;text-transform:uppercase}
+:root[data-skin="forge"] .flabel{font-family:var(--mark);font-size:10.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* heat ramp: the eras run hotter toward Death Metal */
+:root[data-skin="forge"] .era[data-e="0"]{--acc:var(--heat3)}
+:root[data-skin="forge"] .era[data-e="1"]{--acc:var(--heat2)}
+:root[data-skin="forge"] .era[data-e="2"]{--acc:var(--heat1)}
+:root[data-skin="forge"] .era[data-e="3"]{--acc:var(--heat0)}
+:root[data-skin="forge"] .era{--tint:#100C16;--deep:var(--ink)}
