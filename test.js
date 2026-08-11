@@ -244,6 +244,14 @@ function run(){
   ok('phead visible by default', q('#phead') && !q('#phead').hidden);
   ok('topbar hidden by default', q('.topbar') && q('.topbar').hidden === true);
 
+  // reading-tab marks must refresh the era counters, not just the row
+  {
+    const src = require('fs').readFileSync('index.html','utf8');
+    const setRdr = src.slice(src.indexOf('function setRdr'), src.indexOf('function setRdr') + 900);
+    ok('reading-tab marks retally the eras', /tallyEras\(\)/.test(setRdr));
+    ok('reading-tab marks persist', /saveProgress\(\)/.test(setRdr));
+  }
+
   // ---- the compact shell was removed for this franchise ----
   ok('compact layout option is gone', !segBtns.some(b => /^compact$/i.test(b.textContent.trim())));
 
