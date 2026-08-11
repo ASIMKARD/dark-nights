@@ -1,9 +1,10 @@
 // Offline service worker.
 // EDIT ON EVERY DEPLOY: bump CACHE, or the browser keeps serving the old shell.
-const CACHE = 'dark-nights-v11';
+const CACHE = 'dark-nights-v12';
 
-const ASSETS = ['./', './index.html', './styles.css', './data.js', './qrcode.js', './manifest.json'];
-const FONTS = [];
+const ASSETS = ['./', './index.html', './styles.css', './data.js', './qrcode.js', './manifest.json',
+  './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable.png', './icons/favicon.png'];
+const FONTS = ['./fonts/anton-400-latin-ext.woff2', './fonts/anton-400-latin.woff2', './fonts/ibm-plex-mono-400-latin-ext.woff2', './fonts/ibm-plex-mono-400-latin.woff2', './fonts/ibm-plex-mono-500-latin-ext.woff2', './fonts/ibm-plex-mono-500-latin.woff2', './fonts/ibm-plex-sans-400-latin-ext.woff2', './fonts/ibm-plex-sans-400-latin.woff2', './fonts/ibm-plex-sans-500-latin-ext.woff2', './fonts/ibm-plex-sans-500-latin.woff2', './fonts/ibm-plex-sans-600-latin-ext.woff2', './fonts/ibm-plex-sans-600-latin.woff2'];
 
 self.addEventListener('install', e => {
   e.waitUntil(
