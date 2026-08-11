@@ -53,7 +53,7 @@
 <header class="phead" id="phead" hidden>
   <h1 class="ptitle">The Pull List</h1>
   <p class="psub">Offline Edition &mdash; progress saves in this browser only, no account needed</p>
-  <p class="pmeta"><span id="strapline"></span> &middot; <b id="buildtag">build v13</b></p>
+  <p class="pmeta"><span id="strapline"></span> &middot; <b id="buildtag">build v14</b></p>
   <div class="pbar2"><i id="pfill2" style="width:0%"></i></div>
   <div class="pstats"><span id="pread">0 / 0 read</span><span id="premain">&mdash;</span></div>
 </header>
@@ -1062,7 +1062,10 @@
       var m = row.querySelector('.mark');
       if (m) { m.textContent = MARKS[view.mark][next]; m.title = LABEL[next]; }
     }
-    paintProgress(); paintPullHead();
+    // tallyEras() was missing here: marks made in the Reading tab updated the
+    // row's dataset.s but never recomputed the era/period counters, so the
+    // checklist kept showing a stale "1 / 26". Every other mark path calls it.
+    paintProgress(); paintPullHead(); tallyEras();
     var list = rdrList();
     if (rdrIdx < list.length - 1) { rdrTouched = true; rdrIdx++; }
     renderReading();
