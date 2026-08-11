@@ -260,6 +260,8 @@ function run(){
     ok('forge skin rules present', sheet.indexOf(':root[data-skin="forge"]') !== -1);
     ok('forge is zero-radius', /data-skin="forge"\]\{[^}]*--radius:0px/.test(sheet));
     ok('forge uses a grid of plates', /data-skin="forge"\] \.arc\{display:grid/.test(sheet));
+    ok('forge scales the checkbox', /data-skin="forge"\] \.row \.mark\{order:1;font-size:26px/.test(sheet));
+    ok('forge scales bookmark and edit', /data-skin="forge"\] \.b\.rv\{[^}]*min-width:40px/.test(sheet));
     ok('forge has nothing sticky', /data-skin="forge"\]\[data-layout="tabs"\] \.pstats/.test(sheet) && /position:static !important/.test(sheet));
     ok('forge numbers its eras', /counter-increment:forge-era/.test(sheet));
     ok('classic override outranks the inline block', /html:root\[data-skin="pull"\]/.test(sheet));
